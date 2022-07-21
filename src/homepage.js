@@ -1,5 +1,7 @@
 import * as comm from "./_index.js";
+
 console.log("homepage中的comm：",comm);
+
 (()=>{
 
     let siteData = [
