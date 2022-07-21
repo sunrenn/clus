@@ -1,0 +1,26 @@
+{
+  "name": "clusjsfunc",
+  "version": "1.0.0",
+  "description": "common little useful small javascript functions.\r 也许应该学习现成的框架。但可能总有些需要的小功能。犯不上学习一个哪怕再小的框架。\r 怎么能把这个做成一个可以用npm安装的东西呢？\r https://vteams.com/learn-more/5-minimalist-javascript-frameworks/\r 这个文章介绍了5个很漂漂的极简js框架。\r https://codecondo.com/9-minimal-frameworks-front-end-js-development/\r 这里有9个，哇塞。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development",
+    "prod": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://lukellin@bitbucket.org/lukellin/clusjsfunc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/lukellin/clusjsfunc/issues"
+  },
+  "homepage": "https://bitbucket.org/lukellin/clusjsfunc#readme",
+  "devDependencies": {
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  }
+}
