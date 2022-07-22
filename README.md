@@ -1,9 +1,13 @@
 # README #
 
+## Plane
 common little useful small javascript functions.
 
 也许应该学习现成的框架。但可能总有些需要的小功能。犯不上学习一个哪怕再小的框架。
 怎么能把这个做成一个可以用npm安装的东西呢？
+
+
+## Refernce (mey be will)
 
 https://vteams.com/learn-more/5-minimalist-javascript-frameworks/
 这个文章介绍了5个很漂漂的极简js框架。
