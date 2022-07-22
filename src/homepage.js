@@ -41,7 +41,7 @@ console.log("homepage中的comm：",comm);
                 {
                     id: "bb",
                     type: "p5js",
-                    itemName: "bounce balls",
+                    itemName: "What's wrong balls",
                     itemSrc: "show/5.js",
                 },
             ]

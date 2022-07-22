@@ -3,11 +3,12 @@ let balls = []
 let csize = [512,512]
 let cx,cy;
 let bounceRate = 0.9;
+let ballsNum = 11;
 function setup() {
 	frameRate(30)
 	createCanvas(csize[0],csize[1]);
-	for (i=0;i<12;i++){
-		let ball = new Ball((i+0.5)*512/12,0,0,0,sFibonacci(i+3));
+	for (i=0;i<ballsNum;i++){
+		let ball = new Ball((i+0.5)*512/ballsNum,0,0,0,sFibonacci(i+3));
 		balls.push(ball);
 	}
 
@@ -28,6 +29,8 @@ function draw() {
 		fill(11,66);
 		stroke(0,200);
 		balls[k].drop();
+		noStroke();
+		text("what's wrong with ball 7?",15,500);
 	}
 	
 }
@@ -46,8 +49,8 @@ class Ball {
 		this.py += this.vy;
 		this.vy += this.g;
 
-		if (this.py > csize[1]) {
-			this.py = csize[1]-1;
+		if (this.py > (csize[1]-this.ballSize*0.5)) {
+			this.py = csize[1]-this.ballSize*0.5-1;
 			this.vy *= -1*bounceRate;
 			this.vx *= bounceRate;
 		}

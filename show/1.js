@@ -15,7 +15,7 @@ function setup() {
 	nd.templateModel();
 	nd.content();
 }
-  
+
 function draw() {
 	if (typeof(FLogo)=="function"){
 		stroke(255);
@@ -112,4 +112,5 @@ class PersonalDesign {
 		}
 	}
 }
+
 
