@@ -3,7 +3,9 @@
 ## Plane
 common little useful small javascript functions.
 
-也许应该学习现成的框架。但可能总有些需要的小功能。犯不上学习一个哪怕再小的框架。
+A fragmented self-use code base, maybe I should learn the existing framework. But there may always be some functions needed which is too small to learn any  small framework.
+
+一个零零碎碎的自用代码库，也许应该学习现成的框架。但可能总有些需要的小功能。犯不上学习一个哪怕再小的框架。
 怎么能把这个做成一个可以用npm安装的东西呢？
 
 
