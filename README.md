@@ -9,7 +9,7 @@ A fragmented self-use code base, maybe I should learn the existing framework. Bu
 怎么能把这个做成一个可以用npm安装的东西呢？
 
 
-## Reference (mey be will)
+## Reference (or just a collection)
 
 https://vteams.com/learn-more/5-minimalist-javascript-frameworks/
 这个文章介绍了5个很漂漂的极简js框架。
