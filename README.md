@@ -7,7 +7,7 @@ common little useful small javascript functions.
 怎么能把这个做成一个可以用npm安装的东西呢？
 
 
-## Refernce (mey be will)
+## Reference (mey be will)
 
 https://vteams.com/learn-more/5-minimalist-javascript-frameworks/
 这个文章介绍了5个很漂漂的极简js框架。
