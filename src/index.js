@@ -1,5 +1,4 @@
 import "./homepage.js";
-import "../assets/p5/lib/p5.js";
 
 window.onload = ()=>{
     // console.log("index中的comm：");
