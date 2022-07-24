@@ -1,4 +1,4 @@
-// import * as comm from "./_index.js";
+import * as comm from "./_index.js";
 
 
 (()=>{
