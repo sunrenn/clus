@@ -1,4 +1,4 @@
-import "./homepage.js";
+// import "./homepage.js";
 
 window.onload = ()=>{
     // console.log("index中的comm：");
