@@ -28,7 +28,8 @@ export function ajaxP5JsFile(sId, url) {
                 oHead.appendChild(oScript);
             }
             else {
-                oScript.text += source;
+                oScript.text = source;
+                // oScript.text += source;
             }
         }
     }
