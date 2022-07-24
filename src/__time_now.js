@@ -33,3 +33,8 @@ export function nowTime (){
 
     return dNow;
 }
+
+function to0x(num){
+    //如果 num <10 ，在前面十位上 补0 后返回，用于表示时间
+    return num<10?"0"+num:num;
+}
