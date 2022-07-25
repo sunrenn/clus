@@ -1,7 +1,5 @@
 import * as comm from "./_index.js";
 
-console.log("homepage中的comm：",comm);
-
 (()=>{
 
     let siteData = [
@@ -58,7 +56,7 @@ console.log("homepage中的comm：",comm);
     
     let param = comm.parameters();
     if ((param.params)&&(param.params.length>0)) {
-        // comm.ajaxP5JsFile("p5js", "../assets/p5/lib/p5.js");
+        comm.ajaxP5JsFile("p5lib", "../assets/p5/lib/p5.js");
         comm.ajaxP5JsFile("p5pi", "../show/_p5i.js");
         comm.ajaxP5JsFile("p5sketch", "../"+param.params[0]+"/"+param.params[1]+".js");
     }

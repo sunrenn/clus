@@ -1,4 +1,5 @@
 
+
 let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
 	let arr = [basesize[0]*scale, basesize[1]*scale];
 	return arr; 
