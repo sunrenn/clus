@@ -6,7 +6,7 @@ export function ajaxP5JsFile(sId, url) {
             includeJS(sId, url, oXmlHttp.responseText);
         }
     }
-    oXmlHttp.open('GET', url, false); //同步操作  
+    oXmlHttp.open('GET', url, false); //这里要使用异步操作，设计回调程序。
     oXmlHttp.send(null);
 
     function GetHttpRequest() {
