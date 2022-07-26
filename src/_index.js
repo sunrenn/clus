@@ -5,7 +5,8 @@ import { acceler } from "./__anim_acceler.js";
 import { randomChar } from "./__char_random.js";
 import { getStyle } from "./__style_getStyle.js";
 import { sFibonacci } from "./__math_sequences.js";
+import { nowTime } from "./__time_now.js";
 
-export {newNode,ajaxP5JsFile,parameters,acceler,randomChar,getStyle,sFibonacci};
+export {newNode,ajaxP5JsFile,parameters,acceler,randomChar,getStyle,sFibonacci,nowTime};
 
 

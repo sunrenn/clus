@@ -1,9 +1,5 @@
 import * as comm from "./_index.js";
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 678beb6f2535404e74fb49aaa42e021a1513e57a
 (()=>{
 
     let siteData = [
@@ -59,12 +55,6 @@ import * as comm from "./_index.js";
     ];
     
     let param = comm.parameters();
-<<<<<<< HEAD
-    if ((param.params)&&(param.params.length>0)) {
-        comm.ajaxP5JsFile("p5lib", "../assets/p5/lib/p5.js");
-        comm.ajaxP5JsFile("p5pi", "../show/_p5i.js");
-        comm.ajaxP5JsFile("p5sketch", "../"+param.params[0]+"/"+param.params[1]+".js");
-=======
     if ((param.params)&&(param.params.length>0)&&(param.params[1]!="")) {
         if (param.params[2]=="ml5js") {
             comm.ajaxP5JsFile("ml5lib", "../assets/ml5/dist/ml5.min.js");
@@ -72,7 +62,6 @@ import * as comm from "./_index.js";
         comm.ajaxP5JsFile("p5lib", "../assets/p5/lib/p5.min.js");
         comm.ajaxP5JsFile("scrPi", "../show/_p5i.js");
         comm.ajaxP5JsFile("scrA", "../"+param.params[0]+"/"+param.params[1]+".js");
->>>>>>> 678beb6f2535404e74fb49aaa42e021a1513e57a
     }
 
     let itmlist = siteData[0].dataContent;
