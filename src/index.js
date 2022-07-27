@@ -1,6 +1,6 @@
-var tmp = 123;
 
-if (true) {
-   tmp = 'abc'; // ReferenceError
-   let tmp;
-}
+
+
+
+import "./src/index2.js";
+document.writeln(tmp);
