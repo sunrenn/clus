@@ -39,6 +39,18 @@ window.siteGlobal.siteData = [
                 itemName: "What's wrong balls",
                 itemSrc: "show/5.js",
             },
+            {
+                id: "knnExample",
+                type: "ml5js",
+                itemName: "featureExtractor",
+                itemSrc: "show/knn_01_featureExtractor_2022_07_03_15_47_45.js",
+            },
+            {
+                id: "officialDemo",
+                type: "ml5js",
+                itemName: "official Demo",
+                itemSrc: "show/myknn00.js",
+            },
         ]
     },
     {

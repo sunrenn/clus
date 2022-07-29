@@ -7,7 +7,7 @@ let sData = window.siteGlobal.siteData;
     let param = comm.parameters();
     if ((param.params)&&(param.params.length>0)&&(param.params[1]!="")) {
         if (param.params[2]=="ml5js") {
-            comm.ajaxP5JsFile("ml5lib", "../assets/ml5/dist/ml5.min.js");
+            comm.ajaxP5JsFile("ml5lib", "../assets/ml5/ml5.min.js");
         }
         comm.ajaxP5JsFile("scrPi", "../show/_p5i.js");
         comm.ajaxP5JsFile("scrA", "../"+param.params[0]+"/"+param.params[1]+".js");
