@@ -55,20 +55,27 @@ function modelReady() {
 }
 
 function keyPressed() {
+  console.log("key pressed");
   //
   if (key === "0") {
+    console.log("key 0 pressed");
     addExample("0");
   } else if (key === "1") {
+    console.log("key 1 pressed");
     addExample("1");
   } else if (key === "2") {
+    console.log("key 2 pressed");
     addExample("2");
   }
   // key press with shift
   else if (key === ")") {
+    console.log("key SHIFT 0 pressed");
     clearLabel("0");
   } else if (key === "!") {
+    console.log("key SHIFT 1 pressed");
     clearLabel("1");
   } else if (key === "@") {
+    console.log("key SHIFT 2 pressed");
     clearLabel("2");
   }
   // init the classification

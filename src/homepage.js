@@ -9,7 +9,6 @@ let sData = window.siteGlobal.siteData;
         if (param.params[2]=="ml5js") {
             comm.ajaxP5JsFile("ml5lib", "../assets/ml5/dist/ml5.min.js");
         }
-        comm.ajaxP5JsFile("p5lib", "../assets/p5/p5.min.js");
         comm.ajaxP5JsFile("scrPi", "../show/_p5i.js");
         comm.ajaxP5JsFile("scrA", "../"+param.params[0]+"/"+param.params[1]+".js");
     }
@@ -31,6 +30,9 @@ let sData = window.siteGlobal.siteData;
         newele.addEventListener("click", handleClick);
     }
 
+
+
+    
     function headerLogo(){
 
         comm.newNode("header","","oHeader");
@@ -44,5 +46,11 @@ let sData = window.siteGlobal.siteData;
 
     }
     headerLogo();
+
+    
+    // console.log("index中的comm：");
+    comm.newNode("h1","hiHhiHhiHhiH~","h1a");
+    let txtResult = comm.nowTime();
+    h1a.innerHTML = txtResult;
 
 })();
