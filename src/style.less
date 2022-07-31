@@ -57,3 +57,16 @@ h1 {
 }
 
 #oLogo { color: #000; padding: 1px 8px;}
+
+
+.infodiv { padding: 10px;
+  &.itm2 { 
+    color: rgb(154, 46, 46); 
+    font-weight: lighter; 
+    font-size: 10px;
+
+    &::before {content: "[";}
+    &::after {content: "]";}
+  
+  }
+}

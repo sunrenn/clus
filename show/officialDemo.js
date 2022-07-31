@@ -22,8 +22,11 @@ function gotResult(error, results){
     else {
         console.log("results!!!");
         console.log(results);
-        createDiv(`Label: ${results[0].label}`);
-        createDiv(`Confidence: ${nf(results[0].confidence, 0, 2)}`);
+        dLabel = createDiv(`Label: ${results[0].label}`);
+        dLabel.id("dLabel");
+        dLabel.class("infodiv itm1");
+        dConfidence = createDiv(`Confidence: ${nf(results[0].confidence, 0, 2)}`);
+        dConfidence.id("dConfidence");
+        dConfidence.class("infodiv itm2");
     }
-    
 }

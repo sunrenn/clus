@@ -1,26 +1,29 @@
 
 export function ajaxP5JsFile(sId, url) {
 
-    function objXMLHttpRequest() {
+    function objXMLHttpRequest(somefun) {
+        
+        let oXHR;
+
         if (window.XMLHttpRequest) // Gecko  
-            return new XMLHttpRequest();
+            oXHR = new XMLHttpRequest();
         else if (window.ActiveXObject) // IE  
-            return new ActiveXObject("MsXml2.XmlHttp");
-    }
-    var oXHR = objXMLHttpRequest();
+            oXHR = new ActiveXObject("MsXml2.XmlHttp");
 
-    oXHR.onreadystatechange = function () {
-        if (oXHR.readyState == 4) {
-            replaceJS(sId, url, oXHR.responseText);
+        oXHR.onreadystatechange = function () {
+            if (oXHR.readyState == 4) {
+                somefun(sId, url, oXHR.responseText);
+            }
+            console.log("getAllResponseHeaders:");
+            console.log(oXHR.getAllResponseHeaders());
+            console.log("readyState:");
+            console.log(oXHR.readyState);
         }
-        // console.log("getAllResponseHeaders:");
-        // console.log(oXHR.getAllResponseHeaders());
-        // console.log("readyState:");
-        // console.log(oXHR.readyState);
+        oXHR.open('GET', url, false); //这里要使用异步操作，设计回调程序。
+        oXHR.send(null);
     }
-    oXHR.open('GET', url, false); //这里要使用异步操作，设计回调程序。
-    oXHR.send(null);
 
+    objXMLHttpRequest(replaceJS);
 
     function includeJS(sId, fileUrl, source) {
         if (source != null) {

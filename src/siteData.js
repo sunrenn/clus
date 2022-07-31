@@ -49,7 +49,7 @@ window.siteGlobal.siteData = [
                 id: "officialDemo",
                 type: "ml5js",
                 itemName: "official Demo",
-                itemSrc: "show/myknn00.js",
+                itemSrc: "show/officialDemo.js",
             },
         ]
     },
