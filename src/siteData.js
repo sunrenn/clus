@@ -51,6 +51,12 @@ window.siteGlobal.siteData = [
                 itemName: "official Demo",
                 itemSrc: "show/officialDemo.js",
             },
+            {
+                id: "omygod",
+                type: "p5js",
+                itemName: "2Stupid2work",
+                itemSrc: "show/6.js",
+            },
         ]
     },
     {
