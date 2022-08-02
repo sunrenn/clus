@@ -40,18 +40,6 @@ window.siteGlobal.siteData = [
                 itemSrc: "show/5.js",
             },
             {
-                id: "knnExample",
-                type: "ml5js",
-                itemName: "featureExtractor",
-                itemSrc: "show/knn_01_featureExtractor_2022_07_03_15_47_45.js",
-            },
-            {
-                id: "officialDemo",
-                type: "ml5js",
-                itemName: "official Demo",
-                itemSrc: "show/officialDemo.js",
-            },
-            {
                 id: "omygod",
                 type: "p5js",
                 itemName: "2Stupid2work",
