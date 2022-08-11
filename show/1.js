@@ -60,8 +60,8 @@ class PersonalDesign {
 		sth2rmb.push("prototype");
 		sth2rmb.push("timer");
 		sth2rmb.push("Slider");
+		sth2rmb.push("recursive");
 		sth2rmb.push("LoadOnDemand");
-		// sth2rmb.push("“我”是厄运");
 
 		txtContent.push(sth2rmb);
     
