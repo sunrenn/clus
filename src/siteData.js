@@ -1,19 +1,27 @@
 window.siteGlobal = {};
-window.siteGlobal.siteData = [
-    {
-        dataType: "item",
+window.siteGlobal.siteData = {
+    problems: {
+        dataType: "problem",
+        dataContent: [
+            "啥?",
+            "干啥?",
+            "有啥用?",
+        ]
+    },
+    items: {
+        dataType: "items",
         dataContent: [
             {
-                id: "INDEX",
-                type: "p5js",
-                itemName: "INDEX",
+                id: "logo",
+                type: "menu",
+                itemName: "Lukelin's Index",
                 itemSrc: "/",
             },
             {
                 id: "call",
                 type: "p5js",
-                itemName: "ES5",
-                itemSrc: "show/1aSubjectWithKeypoint.js",
+                itemName: "new & null",
+                itemSrc: "show/1newnull.js",
             },
             {
                 id: "money",
@@ -48,17 +56,15 @@ window.siteGlobal.siteData = [
             {
                 id: "badball",
                 type: "p5js",
-                itemName: "try to be a ball",
-                itemSrc: "show/7badball.js",
+                itemName: "try to be a bad ball",
+                itemSrc: "show/7badball2.js",
+            },
+            {
+                id: "unkonw",
+                type: "p5js",
+                itemName: "mean sth Unkonw",
+                itemSrc: "show/8mean.js",
             },
         ]
-    },
-    {
-        dataType: "problem",
-        dataContent: [
-            "啥?",
-            "干啥?",
-            "有啥用?",
-        ]
     }
-];
+};

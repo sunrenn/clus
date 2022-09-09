@@ -2,8 +2,8 @@
 let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
 	let arr = [basesize[0]*scale, basesize[1]*scale];
 	return arr; 
-})();
-// ([512, 512],1);
+})([512, 512],1);
+
 function setup() {
 	createCanvas(pagesizew,pagesizeh);
 	frameRate(30);
@@ -26,14 +26,6 @@ function draw() {
 	}
 }
 
-class DesignUnit {
-	strokeColor='rgba(255,255,255,0.5)';
-	strokeWeight=1;
-	constructor(){
-		
-	}
-}
-
 class PersonalDesign {
 
 	constructor(){
@@ -48,40 +40,42 @@ class PersonalDesign {
 
 		let txtContent = [];
 		let sth2rmb = [];
-		sth2rmb.push("event");
-		sth2rmb.push("DOM&BOM");
-		sth2rmb.push("AJAX");
-		sth2rmb.push("regex");
-		sth2rmb.push("Closure");
-		sth2rmb.push("json");
-		sth2rmb.push("mediaPlayer");
-		sth2rmb.push("prototype");
-		sth2rmb.push("timer");
-		sth2rmb.push("Slider");
-		sth2rmb.push("recursive");
-		sth2rmb.push("LoadOnDemand");
+		sth2rmb.push("alpha α");
+		sth2rmb.push("beta β");
+		sth2rmb.push("gamma γ");
+		sth2rmb.push("delta δ");
+		sth2rmb.push("epsilon ε");
+		sth2rmb.push("zeta ζ");
+		sth2rmb.push("eta η");
+		sth2rmb.push("theta θ");
+		sth2rmb.push("iota ι");
+		sth2rmb.push("kappa κ");
+		sth2rmb.push("lambda λ");
+		sth2rmb.push("mu μ");
+		sth2rmb.push("nu ν");
+		sth2rmb.push("xi ξ");
+		sth2rmb.push("omicron ο");
+		sth2rmb.push("pi π");
+		sth2rmb.push("rho ρ");
+		sth2rmb.push("sigma σ");
+		sth2rmb.push("tau τ");
+		sth2rmb.push("upsilon υ");
+		sth2rmb.push("phi φ");
+		sth2rmb.push("chi χ");
+		sth2rmb.push("psi ψ");
+		sth2rmb.push("omega ω");
 
 		txtContent.push(sth2rmb);
     
 
 		sth2rmb = [];
-		sth2rmb.push("call(?)");
-		sth2rmb.push("NULL");
-		// sth2rmb.push("NaN");
-		// sth2rmb.push("ES5");
+		sth2rmb.push("null");
 
 		txtContent.push(sth2rmb);
 
 
 		sth2rmb = [];
-		sth2rmb.push("Still! Live 4 What?");
-		// sth2rmb.push("JAVASCRIPT");
-
-		txtContent.push(sth2rmb);
-
-		sth2rmb = [];
-		sth2rmb.push("I'V Fnshd, Yrtn");
-		// sth2rmb.push("JAVASCRIPT");
+		sth2rmb.push("neull4life");
 
 		txtContent.push(sth2rmb);
 
@@ -125,9 +119,9 @@ class PersonalDesign {
     let itm,textcontent;
     let widthMaxPerCol=[];
     let tx=10,ty=0;
-    let colnum = 3;
+    let colnum = 4;
     let rownumpercol = Math.floor(txtContent[0].length/colnum);
-		txtSzBottom = 17;
+		txtSzBottom = 14;
 		textFont('Courier',txtSzBottom);
 		textAlign(LEFT,CENTER);
     textWrap(CHAR);

@@ -48,9 +48,7 @@ class PersonalDesign {
 
 		let txtContent = [];
 		let sth2rmb = [];
-		sth2rmb.push("element");
 		sth2rmb.push("event");
-		sth2rmb.push("animate");
 		sth2rmb.push("DOM&BOM");
 		sth2rmb.push("AJAX");
 		sth2rmb.push("regex");

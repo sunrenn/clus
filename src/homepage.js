@@ -13,7 +13,7 @@ let sData = window.siteGlobal.siteData;
         comm.ajaxP5JsFile("scrA", "../"+param.params[0]+"/"+param.params[1]+".js");
     }
 
-    let itmlist = sData[0].dataContent;
+    let itmlist = sData.items.dataContent;
     
     const handleClick = function (e) {
         window.location = ('/?'+this.itemSrc.split(".")[0].replace("/","&")+"&"+this.type);
@@ -37,7 +37,7 @@ let sData = window.siteGlobal.siteData;
 
         comm.newNode("header","","oHeader");
         let noRandom = (param.params)?comm.randomChar(param.params[1]):0;
-        let logoTxt = sData[1]['dataContent'][noRandom%sData[1]['dataContent'].length];
+        let logoTxt = sData.problems['dataContent'][noRandom%sData.problems['dataContent'].length];
         comm.newNode("div",logoTxt,"oLogo","oHeader");
         let targetX = document.querySelector("#oItemList").getBoundingClientRect().left;
         targetX = Math.floor(targetX) - 168;
@@ -48,7 +48,6 @@ let sData = window.siteGlobal.siteData;
     headerLogo();
 
     
-    // console.log("index中的comm：");
     comm.newNode("h1","hiHhiHhiHhiH~","h1a");
     let txtResult = comm.nowTime();
     h1a.innerHTML = txtResult;

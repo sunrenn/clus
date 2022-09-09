@@ -25,7 +25,6 @@ export function sFibonacci(num) {
 	}
 	catch(e){
 
-		console.log(e);
 
 	}
 }

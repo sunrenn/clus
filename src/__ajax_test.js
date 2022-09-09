@@ -22,7 +22,6 @@ function handleStateChange(somefunc) {
 }
 
 funResponseText(rtStr) {
-  console.log(rtStr);
 }
 
 
