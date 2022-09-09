@@ -11,37 +11,8 @@ function setup() {
 	fill(255);
 	noStroke();
 }
-
-function draw(){
-
-}
-
-class Title {
-	constructor(content,size,hslColor){
-		this.content = content;
-		this.baseSize = size;
-		this.color = hslColor?[hslColor]:[[0,100,50],[0,50,50]];
-		this.styleFill = ()=>{
-			return function(){
-				fill(this.color[0]);
-			}
-		}
-	}
-	effect(){
-		for (i=0;i<10;i++){
-			this.size +=i;
-		}
-	}
-}
-
-
-
-
-
-
-
-
-function tempMASS() {
+  
+function draw() {
 	background(0);
 	if (typeof(FLogo)=="function"){
 		stroke(255);
@@ -113,7 +84,7 @@ class PersonalDesign {
 		txtContent.push(sth2rmb);
 
 		sth2rmb = [];
-		sth2rmb.push("I'V Fnshd, Yrtrn");
+		sth2rmb.push("I'V Fnshd, Yrtn");
 		// sth2rmb.push("JAVASCRIPT");
 
 		txtContent.push(sth2rmb);
@@ -130,7 +101,6 @@ class PersonalDesign {
 
     pdTitle(txtContent[1].at(-1),txtContent[2].at(-1),txtsiz);
 
-    console.log(txtContent[1].at(-1),"txtContent");
     function pdTitle(titleContent,subtitleContent,txtSize){
 
       textAlign(CENTER,CENTER);
@@ -187,6 +157,7 @@ class PersonalDesign {
 
 
 
+    console.log(rownumpercol,"rownumpercol");
 
 	}
 
