@@ -1,15 +1,27 @@
 
-let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
+let cvsSz = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
 	let arr = [basesize[0]*scale, basesize[1]*scale];
-	return arr; 
+	arr.push([arr[0]*0.5,arr[1]*0.5]);
+
+	let canvasInfo = {
+		ww: arr[0],
+		hh: arr[1],
+		cx: arr[2][0],
+		cx: arr[2][1]
+	}
+
+	return canvasInfo; 
 })();
 // ([512, 512],1);
+let titleArr = [];
 function setup() {
-	createCanvas(pagesizew,pagesizeh);
+	createCanvas(cvsSz[ww],cvsSz[hh]);
+	console.log(cvsSz);
 	frameRate(30);
-	background(0);
+	background(0,9,221);
 	fill(255);
 	noStroke();
+	let tt1 = new Title("Null",cvsSz[cx],cvsSz[cy]);
 }
 
 function draw(){
@@ -17,13 +29,16 @@ function draw(){
 }
 
 class Title {
-	constructor(content,size,hslColor){
+	constructor(content,xx,yy,size,hslColor){
 		this.content = content;
+		this.xx = xx;
+		this.yy = yy;
 		this.baseSize = size;
 		this.color = hslColor?[hslColor]:[[0,100,50],[0,50,50]];
 		this.styleFill = ()=>{
 			return function(){
 				fill(this.color[0]);
+				text(this.content,xx,yy);
 			}
 		}
 	}
