@@ -11,17 +11,18 @@ let cvsSz = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => {
 	}
 
 	return canvasInfo; 
-})();
+})([512,512],1.25);
 // ([512, 512],1);
 let titleArr = [];
 function setup() {
-	createCanvas(cvsSz[ww],cvsSz[hh]);
+	createCanvas(cvsSz["ww"],cvsSz["hh"]);
 	console.log(cvsSz);
 	frameRate(30);
-	background(0,9,221);
+	colorMode(HSL,100);
+	background(0,50,5);
 	fill(255);
 	noStroke();
-	let tt1 = new Title("Null",cvsSz[cx],cvsSz[cy]);
+	let tt1 = new Title("Null",cvsSz["cx"],cvsSz["cy"]);
 }
 
 function draw(){
