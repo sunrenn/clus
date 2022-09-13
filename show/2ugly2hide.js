@@ -7,7 +7,7 @@ function canvasSize(basesize = [window.innerWidth, window.innerHeight],scale = 1
 
 	return stagesize;
 }
-[pagesizew,pagesizeh] = canvasSize([512, 512],1);
+[pagesizew,pagesizeh] = canvasSize([1000, 640],1);
 
 
 function setup() {
@@ -28,9 +28,9 @@ function setup() {
   
 function draw() {
 	if (typeof(FLogo)=="function"){
-		stroke(255);
+		noStroke();
 		strokeWeight(1);
-		var nlg = new FLogo([512,512],1,0);
+		var nlg = new FLogo([1000,640],1,0);
 		nlg.masterPlate();
 	}
 }
