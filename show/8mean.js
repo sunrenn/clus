@@ -1,12 +1,13 @@
 function setup() {
 
   createCanvas(512, 512);
+  background(0,0,255);
 
 }
 
 function draw() {
   // clear();
-  background(0,0,0,50);
+  // background(0,0,0,50);
   what();
 }
 
