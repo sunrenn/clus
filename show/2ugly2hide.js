@@ -18,15 +18,17 @@ function setup() {
 	nd.templateModel();
 	nd.content();
 
-	for (let i = 0; i<random(10,30); i++){
-			stroke((i%2)*122,random(0,333));
-			strokeWeight(random(1,111));
-			let y = random(0,pagesizeh);
-			line(0, y, pagesizew, y);
-	}
+    for (let i = 0; i<random(10,30); i++){
+        stroke((i%2)*122,random(0,333));
+        strokeWeight(random(1,111));
+        let y = random(0,pagesizeh);
+        line(0, y, pagesizew, y);
+    }
 	if (typeof(FLogo)=="function"){
-		var nlg = new FLogo([pagesizew,pagesizeh],0,0);
-		nlg.masterPlate();
+		let masterPlateGraphic = createGraphics();
+		noStroke();
+		masterPlateGraphic.nlg = new FLogo([1000,640],1,0);
+		masterPlateGraphic.nlg.masterPlate();
 	}
 }
   
