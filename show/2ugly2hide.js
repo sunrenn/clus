@@ -7,7 +7,7 @@ function canvasSize(basesize = [window.innerWidth, window.innerHeight],scale = 1
 
 	return stagesize;
 }
-[pagesizew,pagesizeh] = canvasSize([1000, 640],1);
+[pagesizew,pagesizeh] = canvasSize([512, 512],1);
 
 
 function setup() {
@@ -18,21 +18,19 @@ function setup() {
 	nd.templateModel();
 	nd.content();
 
-    for (let i = 0; i<random(10,30); i++){
-        stroke((i%2)*122,random(0,333));
-        strokeWeight(random(1,111));
-        let y = random(0,pagesizeh);
-        line(0, y, pagesizew, y);
-    }
+	for (let i = 0; i<random(10,30); i++){
+			stroke((i%2)*122,random(0,333));
+			strokeWeight(random(1,111));
+			let y = random(0,pagesizeh);
+			line(0, y, pagesizew, y);
+	}
+	if (typeof(FLogo)=="function"){
+		var nlg = new FLogo([pagesizew,pagesizeh],0,0);
+		nlg.masterPlate();
+	}
 }
   
 function draw() {
-	if (typeof(FLogo)=="function"){
-		noStroke();
-		strokeWeight(1);
-		var nlg = new FLogo([1000,640],1,0);
-		nlg.masterPlate();
-	}
 }
 
 class PersonalDesign {

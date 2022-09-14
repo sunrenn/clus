@@ -14,16 +14,13 @@ function setup() {
 	nd.backgroundPattern();
 	nd.templateModel();
 	nd.content();
-}
-  
-function draw() {
 	if (typeof(FLogo)=="function"){
-		stroke(255);
-		strokeWeight(0);
-		console.log(nlg);
 		var nlg = new FLogo([512,512],1,200);
 		nlg.masterPlate();
 	}
+}
+  
+function draw() {
 }
 
 class PersonalDesign {

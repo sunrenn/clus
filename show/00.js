@@ -1,30 +1,77 @@
 
-let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
+let cvsSz = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
 	let arr = [basesize[0]*scale, basesize[1]*scale];
-	return arr; 
-})();
+	arr.push([arr[0]*0.5,arr[1]*0.5]);
+
+	let canvasInfo = {
+		ww: arr[0],
+		hh: arr[1],
+		cx: arr[2][0],
+		cx: arr[2][1]
+	}
+
+	return canvasInfo; 
+})([512,512],1.25);
 // ([512, 512],1);
-let nlg;
+let titleArr = [];
 function setup() {
-	createCanvas(pagesizew,pagesizeh);
+	createCanvas(cvsSz["ww"],cvsSz["hh"]);
+	console.log(cvsSz);
 	frameRate(30);
-	background(0);
+	colorMode(HSL,100);
+	background(0,50,5);
 	fill(255);
 	noStroke();
-	nlg = new FLogo([pagesizew,pagesizeh],1,200);
+	let tt1 = new Title("Null",cvsSz["cx"],cvsSz["cy"]);
 }
-  
-function draw() {
+
+function draw(){
+
+}
+
+class Title {
+	constructor(content,xx,yy,size,hslColor){
+		this.content = content;
+		this.xx = xx;
+		this.yy = yy;
+		this.baseSize = size;
+		this.color = hslColor?[hslColor]:[[0,100,50],[0,50,50]];
+		this.styleFill = ()=>{
+			return function(){
+				fill(this.color[0]);
+				text(this.content,xx,yy);
+			}
+		}
+	}
+	effect(){
+		for (i=0;i<10;i++){
+			this.size +=i;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+function tempMASS() {
 	background(0);
+	if (typeof(FLogo)=="function"){
+		stroke(255);
+		strokeWeight(0);
+		console.log(nlg);
+		var nlg = new FLogo([512,512],1,200);
+		nlg.masterPlate();
+	}
 	let nd = new PersonalDesign;
 	nd.backgroundPattern();
 	nd.templateModel();
 	nd.content();
 	if (frameCount%10<=random(1,10)) {
 		background(0);
-	}
-	if (typeof(FLogo)=="function"){
-		nlg.masterPlate();
 	}
 }
 
@@ -82,7 +129,7 @@ class PersonalDesign {
 		txtContent.push(sth2rmb);
 
 		sth2rmb = [];
-		sth2rmb.push("I'V Fnshd, Yrtn");
+		sth2rmb.push("I'V Fnshd, Yrtrn");
 		// sth2rmb.push("JAVASCRIPT");
 
 		txtContent.push(sth2rmb);
@@ -99,6 +146,7 @@ class PersonalDesign {
 
     pdTitle(txtContent[1].at(-1),txtContent[2].at(-1),txtsiz);
 
+    console.log(txtContent[1].at(-1),"txtContent");
     function pdTitle(titleContent,subtitleContent,txtSize){
 
       textAlign(CENTER,CENTER);
@@ -155,7 +203,6 @@ class PersonalDesign {
 
 
 
-    console.log(rownumpercol,"rownumpercol");
 
 	}
 

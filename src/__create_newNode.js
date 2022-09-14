@@ -14,4 +14,5 @@ export function newNode(what, content, id = "", parentId = "") {
     } else {
         document.body.appendChild(newnode);
     }
+    return newnode;
 }

@@ -58,13 +58,7 @@ window.siteGlobal.siteData = {
                 type: "p5js",
                 itemName: "try to be a bad ball",
                 itemSrc: "show/7badball2.js",
-            },
-            {
-                id: "unkonw",
-                type: "p5js",
-                itemName: "mean sth Unkonw",
-                itemSrc: "show/8mean.js",
-            },
+            }
         ]
     }
 };

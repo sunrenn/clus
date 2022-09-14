@@ -29,5 +29,5 @@ funResponseText(rtStr) {
 function fetchExample() {
   fetch("https://api.nomics.com/v1/currencies/ticker?key=54b37d19b9d2fc7cbe43cc21fabdf8d82b75075e&ids=BTC,ETH,XRP&interval=1d,30d&convert=EUR&platform-currency=ETH&per-page=100&page=1")
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => console.log("data"));
 }

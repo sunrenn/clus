@@ -17,14 +17,13 @@ function setup() {
 	let nd = new PersonalDesign;
 	nd.templateModel();
 	nd.content();
+	if (typeof(FLogo)=="function"){
+		var nlg = new FLogo([512,512],1,22);
+		nlg.masterPlate();
+	}
 }
   
 function draw() {
-	if (typeof(FLogo)=="function"){
-		fill(2);
-		var nlg = new FLogo([512,512],1,255);
-		nlg.masterPlate();
-	}
 }
 
 class PersonalDesign {
