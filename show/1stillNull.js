@@ -2,26 +2,28 @@
 let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight],scale = 1) => { 
 	let arr = [basesize[0]*scale, basesize[1]*scale];
 	return arr; 
-})([512, 512],1);
-
+})();
+// ([512, 512],1);
+let nlg;
 function setup() {
 	createCanvas(pagesizew,pagesizeh);
 	frameRate(30);
 	background(0);
 	fill(255);
 	noStroke();
+	nlg = new FLogo([pagesizew,pagesizeh],1,200);
+}
+  
+function draw() {
+	background(0);
 	let nd = new PersonalDesign;
 	nd.backgroundPattern();
 	nd.templateModel();
 	nd.content();
-}
-  
-function draw() {
+	if (frameCount%10<=random(1,10)) {
+		background(0);
+	}
 	if (typeof(FLogo)=="function"){
-		stroke(255);
-		strokeWeight(0);
-		console.log(nlg);
-		var nlg = new FLogo([512,512],1,200);
 		nlg.masterPlate();
 	}
 }
@@ -48,9 +50,7 @@ class PersonalDesign {
 
 		let txtContent = [];
 		let sth2rmb = [];
-		sth2rmb.push("element");
 		sth2rmb.push("event");
-		sth2rmb.push("animate");
 		sth2rmb.push("DOM&BOM");
 		sth2rmb.push("AJAX");
 		sth2rmb.push("regex");
@@ -69,14 +69,21 @@ class PersonalDesign {
 		sth2rmb = [];
 		sth2rmb.push("call(?)");
 		sth2rmb.push("NULL");
-		sth2rmb.push("NaN");
-		sth2rmb.push("ES5");
+		// sth2rmb.push("NaN");
+		// sth2rmb.push("ES5");
 
 		txtContent.push(sth2rmb);
 
 
 		sth2rmb = [];
-		sth2rmb.push("JAVASCRIPT");
+		sth2rmb.push("Still! Live 4 What?");
+		// sth2rmb.push("JAVASCRIPT");
+
+		txtContent.push(sth2rmb);
+
+		sth2rmb = [];
+		sth2rmb.push("I'V Fnshd, Yrtn");
+		// sth2rmb.push("JAVASCRIPT");
 
 		txtContent.push(sth2rmb);
 
@@ -84,7 +91,7 @@ class PersonalDesign {
 
     
 		let txtsiz;
-    txtsiz = 611;
+    txtsiz = 200;
 		let m=0;    // for counter num
 		let strColor = 'rgba(0,255,0,'+str(1/30)+')';
 		let txtSzTitle,txtSzBottom;
@@ -97,7 +104,7 @@ class PersonalDesign {
       textAlign(CENTER,CENTER);
       
       for (let k = 0; k<numLoop; k++){
-        txtSzTitle = txtSize-sin(radians(k*90/numLoop))*444;
+        txtSzTitle = txtSize+cos(radians(k*90/numLoop))*400*(1+sin((frameCount)));
         textFont('Courier',txtSzTitle);
         let alp = parseFloat((pow((1+cos(radians(90+90*(numLoop-k)/numLoop))),2)).toFixed(2));
         strColor = (k==numLoop-1)?"255":'rgba(0,255,'+str((k*255/numLoop).toFixed(0))+','+alp+')';

@@ -24,15 +24,15 @@ function setup() {
         let y = random(0,pagesizeh);
         line(0, y, pagesizew, y);
     }
+	if (typeof(FLogo)=="function"){
+		let masterPlateGraphic = createGraphics();
+		noStroke();
+		masterPlateGraphic.nlg = new FLogo([1000,640],1,0);
+		masterPlateGraphic.nlg.masterPlate();
+	}
 }
   
 function draw() {
-	if (typeof(FLogo)=="function"){
-		stroke(255);
-		strokeWeight(1);
-		var nlg = new FLogo([512,512],1,0);
-		nlg.masterPlate();
-	}
 }
 
 class PersonalDesign {

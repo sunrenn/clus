@@ -4,12 +4,16 @@ let csize = [512,512]
 let cx,cy;
 let bounceRate = 0.9;
 let ballsNum = 11;
+let nlg;
 function setup() {
 	frameRate(30)
 	createCanvas(csize[0],csize[1]);
 	for (i=0;i<ballsNum;i++){
 		let ball = new Ball((i+0.5)*512/ballsNum,0,0,0,sFibonacci(i+3));
 		balls.push(ball);
+	}
+	if (typeof(FLogo)=="function"){
+		nlg = new FLogo([512,512],1,22);
 	}
 
 }
@@ -31,6 +35,9 @@ function draw() {
 		balls[k].drop();
 		noStroke();
 		text("what's wrong with ball 7?",15,500);
+	}
+	if (typeof(FLogo)=="function"){
+		nlg.masterPlate();
 	}
 	
 }

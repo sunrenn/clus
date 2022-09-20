@@ -14,10 +14,6 @@ export function ajaxP5JsFile(sId, url) {
             if (oXHR.readyState == 4) {
                 somefun(sId, url, oXHR.responseText);
             }
-            console.log("getAllResponseHeaders:");
-            console.log(oXHR.getAllResponseHeaders());
-            console.log("readyState:");
-            console.log(oXHR.readyState);
         }
         oXHR.open('GET', url, false); //这里要使用异步操作，设计回调程序。
         oXHR.send(null);

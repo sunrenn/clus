@@ -30,10 +30,6 @@ export function acceler(oSth,attr,targx,v=100,w=1){
         distance = ( targetX - runningValue );
         // weight
         accelerationA = (1000/1000)*( distance /( targetX - initx )*2)
-        // console.log("runningValue: "+runningValue);
-        // console.log("accelerationA: "+accelerationA);
-        // console.log("speedV: "+speedV);
-        // console.log("distance: "+distance);
         runningTime = runningTime + 1000/24;
         if ((( distance < 1 )&&( speedV < 0.01 ))||( distance > 10000 )) {
             clearInterval ( numIntervID );
