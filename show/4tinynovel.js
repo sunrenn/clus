@@ -1,3 +1,10 @@
+
+let titleFontSize = 270;
+let titleAlpha = 0.2;
+let paraFontSize = 36;
+
+
+
 let sz = [window.innerWidth, window.innerHeight];
 sz = [512,512];
 
@@ -6,7 +13,16 @@ let [pagesizew,pagesizeh] = ((basesize = [window.innerWidth, window.innerHeight]
 	let arr = [basesize[0]*scale, basesize[1]*scale];
 	return arr; 
 })(sz,1);
-nds = []
+
+
+let lastScroll = 0; 
+let targetScroll = 0;
+let txtScroll=0;
+let paraHeight=0;
+
+let nds = []
+
+
 function setup() {
 	createCanvas(pagesizew,pagesizeh);
 	frameRate(30);
@@ -25,6 +41,7 @@ function setup() {
   
 function draw() {
 	background(0);
+	scrollbyMouse();
 	nds[0].content();
 	nds[0].templateModel();
 	if (typeof(FLogo)=="function"){
@@ -67,6 +84,8 @@ class PersonalDesign {
 		sth2rmb.push("我，为什么不能控制自己的身体呢？在他能控制的时候，我又是哪个？外面那个，里面这个。");
 		sth2rmb.push("在这里。我应该有更高的追求吗？不应该，这里是某种动物的巢穴，或者是某种生物的子宫，反正不是人呆的地方，与人这个概念完全不相关！这里就是魂斗罗那种游戏中那种——应该被原子弹毁灭的地方，异形的巢穴！魔鬼的子宫！");
 		// sth2rmb.push("“我”是厄运");
+		sth2rmb.push("如果我活的像个死人一样，可能是会更有机会坐在这学习？");
+		sth2rmb.push("你是想活的像个活蹦乱跳的三尸？那八成是看不进去书了。但是可以看短视频啊。再说人家说天才都不用看书么不是。");
 
 		txtContent.push(sth2rmb);
 
@@ -83,21 +102,26 @@ class PersonalDesign {
 		let m=0;
 		let strColor = 'rgba(0,255,0,'+str(1/30)+')';
 
-		paragraph(txtContent[0],0,0,pagesizew,17);
 
-		let txtsiz1,txtsiz2;
-		txtsiz = 270;
+		// paragraph display
+		paragraph(txtContent[0],0,0,pagesizew,paraFontSize);
+
+
+		// title display
+		let txtsiz1;
+		txtsiz = titleFontSize;
 		textAlign(CENTER,CENTER);
 		for (let k = 0; k<30; k++){
-            let kk = k%sth2rmb.length;
+			let kk = k%sth2rmb.length;
 			txtsiz1 = txtsiz-sin(radians(k*6))*1;
 			textFont('Courier',txtsiz1/2);
 			let alp = parseFloat((1*(30-k)/30).toFixed(2));
 			let h1 = Math.floor(frameCount+k*45);
-			strColor = 'hsla('+h1%255+',100%,50%,0.3)';
+			strColor = 'hsla('+h1%255+',100%,50%,'+titleAlpha+')';
 			fill(strColor);
 			text(txtContent[1][kk], pagesizew/2,k*txtsiz/3);
 		}
+		// title display end
 		
 	}
 }
@@ -106,25 +130,33 @@ function paragraph(content=[],x=0,y=0,w,cellSize){
 	let numCharPerLine =  Math.floor(w/cellSize);
 	let reLineContent = [];
 	let m=0;
-	let padding = 10;
+	let txtY = 0;
 	let charSize = 0.5;
 	textFont('Courier',cellSize*charSize);
 	textAlign(LEFT,CENTER);
 	for (let itm of content){
 		let arrPara = itm.split("");
-		let arrParaLines = []
+		let arrParaLines = [];
 		for (let i=0; i<(arrPara.length/numCharPerLine);i++){
 			let strLine="";
 			let n = 0;
+			if (frameCount==1) {
+				paraHeight += cellSize; 
+			};
 			for (let j=0;j<numCharPerLine;j++){
 				if (itm[i*numCharPerLine+j]) {
 					let hh = Math.floor(frameCount*(i*numCharPerLine+j)/33);
 					strColor = 'hsla('+hh%360+',100%,50%,0.5)';
 					fill(strColor);
-
 					let zi = arrPara[i*numCharPerLine+j];
 					strLine += zi ;
-					text(zi, Math.floor(x+(n+0.5-0.5*charSize)*cellSize), Math.floor(y+(m+0.5+0.5*charSize)*cellSize));
+
+					txtY = Math.floor(y+(m+0.5+0.5*charSize)*cellSize+txtScroll)
+
+					text(zi, 
+						Math.floor(x+(n+0.5-0.5*charSize)*cellSize), 
+						txtY
+						);
 					n++;
 				}
 			}
@@ -133,8 +165,23 @@ function paragraph(content=[],x=0,y=0,w,cellSize){
 		}
 		reLineContent.push(arrParaLines);
 	}
+
 }
 
 function mouseClicked(){
-	noLoop();
+	// noLoop();
+}
+
+function scrollbyMouse(hysteresis=0.01){
+	if (mouseY<0){
+		targetScroll = 0;
+	}
+	else if (mouseY>height){
+		targetScroll = (height-paraHeight);
+	}
+	else {
+		targetScroll = (mouseY/height)*(height-paraHeight);
+	}
+	txtScroll += (targetScroll - lastScroll)*hysteresis;
+	lastScroll = txtScroll;
 }
