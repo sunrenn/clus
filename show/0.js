@@ -1,6 +1,6 @@
 // Color and Style
 
-let audioVisualRate = 5;
+let audioVisualRate = 1;
 
 let style = {
   rangeHueDynamic: 0.1,  // 0-1
@@ -168,7 +168,8 @@ function setup() {
 function draw() {
   clear();
   background(...colorBg);
-  colorSquare(soundVisual.svGetVal());
+  // soundRound(soundVisual.svGetVal());
+  colorSquare();
   say();
 }
 
@@ -218,7 +219,7 @@ function drawaline(x,y,nn,val=0){
   line(x-length,y-length,x+length,y+length);
 }
 
-function colorSquare(val){
+function soundRound(val){
   let stepNum = [5,8];
   let nn=0;
   for (let ii=0;ii<stepNum[0]; ii++){
@@ -241,4 +242,12 @@ function say(){
       fill(...colorFront);
       text(txtarr[ii],(ii+0.5)*width/txtlen,frameCount%height);
   }
+}
+
+function colorSquare(){
+  rectMode(CENTER);
+  fill(...colorMid);
+  rect(...cvsCenterXY, height*0.7, height*0.7);
+  fill(...colorFront);
+  rect(...cvsCenterXY, height*0.3, height*0.3);
 }

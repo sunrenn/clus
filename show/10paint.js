@@ -12,14 +12,14 @@ cvsCenterXY = [cvsSize[0]*0.5,cvsSize[1]*0.5]; // center x y value
 let startDraw = 0;
 // let gphGround, gphDraw;
 
-let styleS = 50;
-let styleSbg = 20;
+let styleSaturation = 50;
+let styleBgSaturation = 20;
 let styleHiddenAlpha = 0;
 let strkHueRange = 0.1;
 
-let dhsl = [0,styleS,50,80];  // default HSL Color
+let dhsl = [0,styleSaturation,50,80];  // default HSL Color
 let sHue,sSaturation,sLight,sAlpha;
-let bgColor = [30,styleSbg,88,100];
+let bgColor = [30,styleBgSaturation,88,100];
 let StrokeColor = [sHue,sSaturation,sLight,sAlpha];
 let hiddenStrokeColor = [bgColor[0],bgColor[1],bgColor[2],styleHiddenAlpha];
 
@@ -95,7 +95,7 @@ function keyPressed(){
     dhsl[0] = mouseLuckyDrawABCD()[0];  // stroke hue x 0-1
     bgColor[0] = mouseLuckyDrawABCD()[1];  // bg hue y 0-1
     bgColor[2] = mouseLuckyDrawABCD()[3];  // light y 1-0
-    hiddenStrokeColor = [bgColor[0],styleSbg,bgColor[2],styleHiddenAlpha];
+    hiddenStrokeColor = [bgColor[0],styleBgSaturation,bgColor[2],styleHiddenAlpha];
     clear();
     background(bgColor);
   }
