@@ -1,7 +1,7 @@
 
 let titleFontSize = 270;
-let titleAlpha = 0.2;
-let paraFontSize = 36;
+let titleAlpha = 0.4;
+let paraFontSize = 24;
 
 
 

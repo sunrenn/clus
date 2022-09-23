@@ -33,7 +33,6 @@ let sData = window.siteGlobal.siteData;
   }
     
   let oItmLst = comm.newNode("div","","oItemList");
-  console.log("oItmLst",oItmLst);
   oItmLst.style.position="absolute";
   oItmLst.style.top="30px";
   oItmLst.style.left="30px";

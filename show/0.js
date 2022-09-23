@@ -1,6 +1,6 @@
 // Color and Style
-
 let audioVisualRate = 5;
+let audioSource = 1; // 1 mp3 | 0 mic
 
 let style = {
   rangeHueDynamic: 0.1,  // 0-1
@@ -41,7 +41,6 @@ function setColor(type=0,rdm=0){
   else {
     mus = mousePositionValue();
   }
-  // console.log([Math.random()*100,Math.random()*100]);
   
   // type: 0=hue, 1=saturation, 2=light, 3=alpha
   colorFront[type]                 = mathRound(mus[0],0); // x position %
@@ -131,7 +130,6 @@ let soundVisual = {
     cvs.mousePressed(userStartAudio);
     this.mmiicc = new p5.AudioIn();
     this.mmiicc.start();
-    console.log(this.mmiicc.getSources());
   },
   svDraw: function(){
     this.micLevel = this.mmiicc.getLevel();
@@ -142,11 +140,18 @@ let soundVisual = {
     this.micLevel = this.mmiicc.getLevel();
     let svval =   this.micLevel*2000  *mouseY/height;
     svval =       this.micLevel*2000  *0.1*audioVisualRate;
-    // console.log(svval);
     
     return svval;
   }
 };
+
+let localSong;
+function preload() {
+  if (audioSource==1){
+    soundFormats('mp3', 'ogg');
+    localSong = loadSound('assets/symphony__1_for_dot_matrix_.mp3');
+  }
+}
 
 let txtarr=[];
 function setup() {
@@ -156,7 +161,15 @@ function setup() {
   blendMode(BLEND);
   background(...colorBg);
   gInfo = createGraphics(cvsSize[0],100);
-  soundVisual.svSetup(objCvs);
+
+  if (audioSource==0){
+    soundVisual.svSetup(objCvs);
+  }
+  else if (audioSource==1){
+    objCvs.mousePressed(function(){
+      localSong.play();
+    });
+  }
 
   textAlign(CENTER);
 
@@ -168,7 +181,12 @@ function setup() {
 function draw() {
   clear();
   background(...colorBg);
-  colorSquare(soundVisual.svGetVal());
+  if (audioSource==0){
+    colorSquare(soundVisual.svGetVal());
+  }
+  else if (audioSource==1){
+    colorSquare(localSong.getPeaks());
+  }
   say();
 }
 
