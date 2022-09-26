@@ -1,8 +1,25 @@
+
+// Canvas Size
+let cvsSize;
+let cvsCenterXY;
+let cvsScale = 1;
+let cvspadding = 0;
+cvsSize = [window.innerWidth, window.innerHeight];
+cvsSize = [650,650];
+// cvsSize = [2160,5120];
+// cvsSize = [5120,3800];
+// cvsSize = [2160,3800];
+//   cvsSize = [1024,1024];
+cvsSize = [cvsSize[0]*cvsScale-cvspadding,cvsSize[1]*cvsScale-cvspadding];
+cvsCenterXY = [cvsSize[0]*0.5,cvsSize[1]*0.5];
+
 // NaN Abstract No.1
 let [pre_x, pre_y] = [1, 1];
 let xyBox = [];
-let xyBoxlen = 12;
-let shapeMount = 36;
+let xyBoxlen = 2;	// records amount
+let shapeMount = 128;
+let displayColorSquare = 0;
+let lineStyle = 0;
 
 // NaN set
 let startDraw = 0;
@@ -10,7 +27,9 @@ let startDraw = 0;
 
 // Color and Style
 let audioVisualRate = 24;
-let audioSource = 1; // 1 mp3 | 0 mic
+let driverType = 0; // -1 mp3 | -2 mic  | >=0 not by mouse
+let noiseLevel = -3;
+let motorbySong=0;
 
 let style = {
   rangeHueDynamic: 0.1,  // 0-1
@@ -18,9 +37,9 @@ let style = {
   saturationBg: 50,
   lightStroke:80,
   contrast:20,  //% 对比度
-  alphaFront: 33,
+  alphaFront: 99,
   alphaMid: 0,
-  alphaBg: 99,
+  alphaBg: 100,
 }
 
 let fHue,fSaturation,fLight,fAlpha;
@@ -67,6 +86,8 @@ function matchColor(range=[20,90]){
   let vrel = mousePositionValue(range);
   let vabs = mousePositionValue();
   let tmpArr = [];
+
+
   tmpArr = rangeValue([
     vabs[0],
     style.saturationStroke,
@@ -82,8 +103,9 @@ function matchColor(range=[20,90]){
     style.alphaBg
   ]);
   [bHue,bSaturation,bLight,bAlpha]=tmpArr;
+
   tmpArr = rangeValue([
-    (vabs[0]+vrel[0]+range[0]-(range[1])),
+    Math.abs(vabs[0]+vrel[0]+range[0]-(range[1])),
     style.saturationBg,
     100-vabs[1]+(100-vabs[1])*vabs[3]*0.5,
     style.alphaMid
@@ -93,26 +115,13 @@ function matchColor(range=[20,90]){
   setSwatches();
 }
 
-function rangeValue(arr,range=100){
+function rangeValue(arr,range=101){
   for (let i=0;i<arr.length;i++){
     arr[i] = mathRound(arr[i]%range,0);
   }
   return arr;
 }
 
-// Canvas Size
-
-let cvsSize;
-let cvsCenterXY;
-let cvsScale = 1;
-let cvspadding = 120;
-cvsSize = [window.innerWidth, window.innerHeight];
-// cvsSize = [650,650];
-// cvsSize = [2160,5120];
-// cvsSize = [2160,3800];
-//   cvsSize = [1024,1024];
-cvsSize = [cvsSize[0]*cvsScale-cvspadding,cvsSize[1]*cvsScale-cvspadding];
-cvsCenterXY = [cvsSize[0]*0.5,cvsSize[1]*0.5];
 
 function mathRound(val,decimalPlaces=2){
   return(Number((((Math.round(val*(10**decimalPlaces)))/(10**(decimalPlaces))).toFixed(decimalPlaces))));
@@ -132,6 +141,9 @@ function mousePositionValue(r=[0,100]){
 
 let objCvs;  // for Image File Saving.
 let gInfo; // graphic for info
+let gColorSquare; // graphic for ColorSquare
+let gFront; // graphic for Abstract
+let gMid; // graphic for Abstract
 
 let soundVisual = {
   mmiicc:null,
@@ -147,9 +159,9 @@ let soundVisual = {
     ellipse(width/2, y, 10, 10);
   },
   svGetVal: function(){
-    this.micLevel = this.mmiicc.getLevel();
-    let svval =   this.micLevel*2000  *mouseY/height;
-    svval =       this.micLevel*2000  *0.1*audioVisualRate;
+    this.micLevel =   this.mmiicc.getLevel();
+    let svval =       this.micLevel*2000  *mouseY/height;
+    svval =           this.micLevel*2000  *0.1*audioVisualRate;
     
     return svval;
   }
@@ -157,28 +169,36 @@ let soundVisual = {
 
 let localSong;
 function preload() {
-  if (audioSource==1){
+  if (driverType==-1){
     soundFormats('mp3', 'ogg');
     localSong = loadSound('assets/symphony__1_for_dot_matrix_.mp3');
   }
 }
 
 let txtarr=[];
+let showInfoTimer = 0;
+let displayTime = 1;
+let abstrInfo;
+
 function setup() {
   objCvs = createCanvas(...cvsSize);
   colorMode(HSL,100);
   randomColor();
   blendMode(BLEND);
   background(...colorBg);
-  gInfo = createGraphics(cvsSize[0],100);
-
-  if (audioSource==0){
+  gInfo = createGraphics(...cvsSize);
+  gColorSquare = createGraphics(...cvsSize);
+  gFront = createGraphics(...cvsSize);
+  gMid = createGraphics(...cvsSize);
+  if (driverType==-2){
     soundVisual.svSetup(objCvs);
   }
-  else if (audioSource==1){
+  else if (driverType==-1){
     objCvs.mousePressed(function(){
       localSong.play();
       startDraw=1;
+      clear();
+      background(...colorBg);
     });
     amplitude = new p5.Amplitude();
   }
@@ -188,37 +208,51 @@ function setup() {
   txtarr.push("你好");
   txtarr.push("");
   txtarr.push(String(""));
+
+  abstrInfo = new WorkInfo();
 }
 
 function draw() {
   // clear();
   // background(...colorBg);
-  if (audioSource==0){
-    colorSquare(soundVisual.svGetVal());
+  if (driverType==-2){
+    soundRound(soundVisual.svGetVal());
   }
-  else if (audioSource==1){
-    // colorSquare(amplitude.getLevel()*audioVisualRate);
+  else if (driverType==-1){
+    motorbySong = amplitude.getLevel()*audioVisualRate - noiseLevel;
+    motorbySong = (motorbySong>0)?motorbySong:0;
+    soundRound(motorbySong);
   }
   // say();
 
+  clear();
+  background(...colorBg);
   // nan abstract No.1
   if (startDraw>0) {
-    shapeSth(frameCount);
+    shapeSth(frameCount,motorbySong);
+    image(gMid,0,0);
+    image(gFront,0,0);
   }
   else if (frameCount==1) {
-    
-    textAlign(CENTER);
-    fill(100);
-    noStroke();
-    textSize(80);
-    text(cos(0)+"Please move your mouse, and stop and wait a while.",cvsCenterXY[0],cvsCenterXY[1]-100);
-    text("You will get a unique painting by your mouse movement.",cvsCenterXY[0],cvsCenterXY[1]);
   }
 
+  if (displayColorSquare==1){
+    colorSquire();
+    showInfo();
+  }
+  abstrInfo.update();
+  abstrInfo.show();
 
 }
 
 function mouseDragged(){
+  startDraw=1;
+  if (displayColorSquare==1){
+    colorSquire();
+    showInfo();
+  }
+  // gFront.clear();
+  // gMid.clear();
   matchColor();
   // if (mouseButton === LEFT) {
   //   sHue = mouseX*100/cvsSize[0];
@@ -235,48 +269,63 @@ function mouseDragged(){
 
 function keyPressed(){
   if (key==" "){
-    dhsl[0] = mousePositionValue()[0];  // stroke hue x 0-1
-    bgColor[0] = mousePositionValue()[1];  // bg hue y 0-1
-    bgColor[2] = mousePositionValue()[3];  // light y 1-0
-    hiddenStrokeColor = [bgColor[0],styleSbg,bgColor[2],styleHiddenAlpha];
+    randomColor();
     clear();
-    background(bgColor);
+    background(colorBg);
   }
   if (key=="c"){
-    sHue = 0;
-    sSaturation = 50;
-    sLight = 50;
-    sAlpha = 80;
+    noLoop();
   }
-  if (key=="b"){
-    bgColor = [30,20,11];
+  if (key=="v"){
+    // redraw();
+    loop();
   }
-  if (key=="w"){
-    bgColor = [30,20,88];
+  if (key=="x"){
+    gFront.clear();
+    gMid.clear();
   }
   if (key=="s"){
     saveCanvas(objCvs, 'abstractNo1_', 'jpg');
   }
 }
 
+class WorkInfo{
+  constructor(){
+
+  }
+  update(){
+
+  }
+  show(){
+  }
+}
+
 function showInfo(){
-  let ms = mousePositionValue();
-  let infoTxt = ["mouseX:"+ms[0]+", mouseY:"+ms[1]];
+  let fontsz = 12;
+  let infoTxt = [];
   infoTxt.push("colorFront: "+colorFront);
-  infoTxt.push("colorBg: "+colorBg);
   infoTxt.push("colorMid: "+colorMid);
-  gInfo.fill(...colorFront);
+  infoTxt.push("colorBg: "+colorBg);
+  // infoTxt.push("Please move your mouse, and stop and wait a while.");
+  // infoTxt.push("You will get a unique painting by your mouse movement.");
+  gInfo.clear();
+  gInfo.colorMode(HSL,100);
+  gInfo.fill(colorFront[0],colorFront[1],(100-colorFront[2]),100);
   gInfo.noStroke();
   gInfo.clear();
-  gInfo.background(...colorMid);
+  gInfo.textAlign(CENTER);
+  gInfo.textSize(fontsz);
   let i=0;
   infoTxt.forEach((a,b,c)=>{
     i++;
-    gInfo.text(a,12,20*(i));
+    gInfo.text(a,cvsCenterXY[0],cvsCenterXY[1]+fontsz*(i-1.5));
   });
   // gInfo.text(infoTxt,12,20);
   image(gInfo,0,0);
+  showInfoTimer+=deltaTime;
+  
 }
+
 
 
 function drawaline(x,y,nn,val=0){
@@ -286,7 +335,7 @@ function drawaline(x,y,nn,val=0){
   line(x-length,y-length,x+length,y+length);
 }
 
-function colorSquare(val){
+function soundRound(val){
   let stepNum = [5,8];
   let nn=0;
   for (let ii=0;ii<stepNum[0]; ii++){
@@ -298,6 +347,20 @@ function colorSquare(val){
       point(...cvsCenterXY);
     }
   }
+}
+
+function colorSquire(){
+  gColorSquare.colorMode(HSL,100);
+  gColorSquare.strokeWeight(1);
+  gColorSquare.stroke(100);
+  gColorSquare.rectMode(CENTER);
+  gColorSquare.fill(colorBg);
+  gColorSquare.rect(...cvsCenterXY,0.55*cvsSize[1],0.33*cvsSize[1]);
+  gColorSquare.fill(colorMid[0],colorMid[1],colorMid[2],100);
+  gColorSquare.rect(...cvsCenterXY,0.44*cvsSize[1],0.22*cvsSize[1]);
+  gColorSquare.fill(colorFront);
+  gColorSquare.rect(...cvsCenterXY,0.33*cvsSize[1],0.11*cvsSize[1]);
+  image(gColorSquare,0,0)
 }
 
 
@@ -312,12 +375,29 @@ function say(){
 }
 
 
-function shapeSth(fc,theta=radians(mouseX*180/cvsSize[0])){
-  let xxx = yyy = mouseY/[cvsCenterXY[0]+cvsCenterXY[1]];
+function shapeSth(fc,motor=1){
+  shapeMode[0] = function(){
+    let theta,xxx,yyy;
+    theta = radians(frameCount*1);
+    xxx = yyy = sin(radians(frameCount));
+    return [theta,xxx,yyy]
+  }
+  let theta;
+  let xxx, yyy;
+  if ((driverType==-1)||(driverType==-2)){
+  theta = radians(motor*180/cvsSize[0]);
+  xxx = yyy = motor*cvsSize[1]/[cvsCenterXY[0]+cvsCenterXY[1]];
+  }
+  else if (driverType>-1) {
+    [theta,xxx,yyy] = shapeMode[0]();
+  }
+  else {
+    theta = radians(mouseX*180/cvsSize[0]);
+    xxx = yyy = mouseY/[cvsCenterXY[0]+cvsCenterXY[1]];
+  }
   // xxx = mouseY/cvsCenterXY[0];
   // yyy = mouseY/cvsCenterXY[1];
   let mul= 0.001;
-  
   let [tempx, tempy] = [1, 1];  // init
   let ff = Math.tan(radians(fc));
 
@@ -335,42 +415,20 @@ function shapeSth(fc,theta=radians(mouseX*180/cvsSize[0])){
     let prex = 0;
     let prey = 0;
     if (xyBox.length>1){
-      prex = xyBox[1][i][0];
-      prey = xyBox[1][i][1];
-      px = px + 0.5*(px-prex);
-      py = py + 0.5*(py-prey);
+      prex = xyBox[0][i][0];
+      prey = xyBox[0][i][1];
+      px = px + 0.1*(px-prex);
+      py = py + 0.1*(py-prey);
     }
-    // strokeSth(i,px,py,prex,prey,sHue,sSaturation,sLight,sAlpha);
-    strokeSth(i,px,py,prex,prey);
+    console.log(motor,i,px,py,prex,prey);
+    funStyleBox[lineStyle](motor,i,px,py,prex,prey);
     [xxx, yyy] = [tempx, tempy]; // [10,10]
-    // dax = (px > dax) ? px : dax;
-    // day = (py > day) ? py : day;
-    // xiaox = (px < xiaox) ? px : xiaox;
-    // xiaoy = (py < xiaoy) ? py : xiaoy;
   }
   xyRecoder(xyr);
+  
+
 
 }
-
-function strokeSth(i,px,py,prex,prey,hue=colorFront[0],saturation=colorFront[1],light=colorFront[2],alpha=colorFront[3],hueRange = style.rangeHueDynamic){
-
-  colorMode(HSL,100);
-  let range = 3;
-  if ((px-prex)<range||(py-prey)<range){
-    stroke(px-prex+py-prey+i*0.2+hue*hueRange,saturation,light,alpha);
-    strokeWeight(1+sin(radians(frameCount))*300*cvsScale/(1 + i*0.5));
-  }
-  else {
-    stroke(...colorMid);
-    strokeWeight(5 + i*1);
-  }
-  point(px,py);
-  // noStroke();
-  // fill(255);
-  // text(i,px, py);
-}
-
-
 
 function xyRecoder(sth,len=xyBoxlen,atEnd = 0){
   if (atEnd==0){
@@ -388,6 +446,64 @@ function xyRecoder(sth,len=xyBoxlen,atEnd = 0){
   return xyBox;
 }
  
+
+
+let funStyleBox = [];
+let shapeMode = []
+
+funStyleBox[0] = function(motor,i,px,py,prex,prey){
+  gFront.colorMode(HSL,100);
+  gMid.colorMode(HSL,100);
+  let range = 20;
+  let hueRange = style.rangeHueDynamic;
+  let stepLen = dist(px,py,prex,prey);
+  if ((stepLen<range)&&(stepLen>0.4)){
+    if(style.alphaFront>0){
+      gFront.stroke(px-prex+py-prey+i*0.2+colorFront[0]*hueRange,colorFront[1],colorFront[2],colorFront[3]);
+      // gFront.strokeWeight(1+sin(radians(frameCount))*10*cvsScale/(1 + i*0.5));
+      gFront.strokeWeight(20/(1+stepLen*2));
+      gFront.point(px,py);
+    }
+  }
+  else {
+    if((style.alphaMid>0)&&(colorMid[0]!=0)){
+      // gMid.stroke((px-prex+py-prey+i*0.2+colorMid[0]*hueRange),colorMid[1],colorMid[2],colorMid[3]);
+      gMid.stroke((colorMid[0]),colorMid[1],colorMid[2]**2,colorMid[3]);
+      gMid.strokeWeight(5);
+      gMid.fill(((px-prex+py-prey)*i*1+colorBg[0]),colorBg[1],colorBg[2],colorBg[3]);
+      gMid.circle(px,py,(px-prex+py-prey)*0.2);
+    }
+  }
+}
+
+funStyleBox[1] = function(motor,i,px,py,prex,prey){
+  gFront.colorMode(HSL,100);
+  gMid.colorMode(HSL,100);
+  let stepLen = dist(px,py,prex,prey);
+  let range = 50;
+  let hueRange = style.rangeHueDynamic;
+  console.log(prex,prey,px,py);
+  if (stepLen<range){
+    if(style.alphaFront>0){
+      gFront.fill(px-prex+py-prey+i*0.2+colorFront[0]*hueRange,colorFront[1],colorFront[2],colorFront[3]);
+      gFront.strokeWeight(5);
+      gFront.stroke(100);
+      gFront.noStroke();
+      // gFront.circle(px,py,1+sin(radians(frameCount))*1*cvsScale*(1 + i*0.5));
+      gFront.circle(px,py,2);
+    }
+  }
+  else {
+    if((style.alphaMid>0)&&(colorMid[0]!=0)){
+      // gMid.stroke((px-prex+py-prey+i*0.2+colorMid[0]*hueRange),colorMid[1],colorMid[2],colorMid[3]);
+      gMid.stroke((colorMid[0]),colorMid[1],colorMid[2]**2,colorMid[3]);
+      gMid.strokeWeight(1);
+      gMid.fill(colorBg[0],colorBg[1],colorBg[2],colorBg[3]);
+      // gMid.circle(px,py,1+sin(radians(frameCount))*1*cvsScale*(1 + i*0.5));
+      gMid.circle(px,py,11);
+    }
+  }
+}
 
 
 
