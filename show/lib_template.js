@@ -4,8 +4,7 @@ let objCvs;  // for Image File Saving.
 
 // NaN set
 let startDraw = 0;
-let displayColorSquare = 0;
-let displayShowInfo = 1;
+let displayColorSquare = 1;
 
 
 function setup() {
@@ -20,8 +19,10 @@ function setup() {
 function draw() {
 	circle(...cvs.center(), 20);
 
-  colorSquire();
-  showInfo();
+  if (displayColorSquare==1){
+    colorSquire();
+    showInfo();
+  }
   
 }
 
@@ -46,12 +47,11 @@ function keyPressed(){
   }
 }
 
-let mdv = []; // Mouse Dragged Value
-
+let mouseDraggedValue = [];
+let mdv = mouseDraggedValue;
 function mousePressed(){
   mdv = [mouseX,mouseY];
 }
-
 function mouseReleased(){
   mdv.push(mouseX);
   mdv.push(mouseY);
@@ -60,8 +60,10 @@ function mouseReleased(){
   mdv.push((mdv[2]-mdv[0])/width);  //[6]
   mdv.push((mdv[3]-mdv[1])/height); //[7]
   startDraw=1;
-  colorSquire();
-  showInfo();
+  if (displayColorSquare==1){
+    colorSquire();
+    showInfo();
+  }
 }
 
 function mouseDragged(){
