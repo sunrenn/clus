@@ -3,10 +3,10 @@ let style = {
   rangeHueDynamic: 0.1,  // 0-1
   saturationStroke: 50,
   saturationBg: 50,
-  lightStroke:80,
+  lightFront:80,
   contrast:20,  //% 对比度
-  alphaFront: 99,
-  alphaMid: 0,
+  alphaFront: 100,
+  alphaMid: 100,
   alphaBg: 100,
 }
 
@@ -76,12 +76,14 @@ function matchColor(range=[35,65]){
   [bHue,bSaturation,bLight,bAlpha]=tmpArr;
 
   tmpArr = rangeValue([
-    (vabs[0]%(100-range[1])+range[1]),
-    style.saturationBg*(1-vrel[3]),
-    100-vrel[1],
+    (vabs[1]),
+    width*(vrel[0]),
+    50,
     style.alphaMid
   ]);
   [mHue,mSaturation,mLight,mAlpha]=tmpArr;
+
+  console.log(tmpArr);
   
   setColorSystem();
 }

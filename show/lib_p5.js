@@ -44,15 +44,24 @@ function mousePositionValue(r=[0,100]){
 
 function colorSquire(gColorSquare=createGraphics(...cvs.size())){
   if (displayColorSquare==1){
+
+    gColorSquare.clear();
+
     gColorSquare.colorMode(HSL,100);
     gColorSquare.strokeWeight(1);
     gColorSquare.stroke(100);
     gColorSquare.rectMode(CENTER);
-    gColorSquare.fill(colorBg);
+
+    // gColorSquare.fill(colorBg);
+    gColorSquare.fill(colorBg[0],colorBg[1],colorBg[2],100);
+    gColorSquare.stroke(0,100,50);
     gColorSquare.rect(...cvs.center(),0.44*cvs.size()[0],0.44*cvs.size()[1]);
     gColorSquare.fill(colorMid[0],colorMid[1],colorMid[2],100);
+    gColorSquare.stroke(30,100,50);
     gColorSquare.rect(...cvs.center(),0.33*cvs.size()[0],0.33*cvs.size()[1]);
-    gColorSquare.fill(colorFront);
+    // gColorSquare.fill(colorFront);
+    gColorSquare.stroke(70,100,50);
+    gColorSquare.fill(colorFront[0],colorFront[1],colorFront[2],100);
     gColorSquare.rect(...cvs.center(),0.22*cvs.size()[0],0.22*cvs.size()[1]);
     image(gColorSquare,0,0);
   }
@@ -64,28 +73,31 @@ function showInfo(gInfo=createGraphics(...cvs.size())){
 
     let i=0;
     let a = "";
-    let fontsz = 32;
+    let fontsz = 16;
 
     gInfo.clear();
     gInfo.colorMode(HSL,100);
     gInfo.fill(colorFront[0],colorFront[1],(100-colorFront[2]),100);
     gInfo.noStroke();
-    gInfo.textAlign(CENTER);
+    gInfo.textAlign(CENTER,BOTTOM);
     gInfo.textSize(fontsz);
 
     a = "colorFront: "+colorFront;
     gInfo.fill(colorFront[0],colorFront[1],(100-colorFront[2]),100);
-    gInfo.text(a,cvs.center()[0],cvs.center()[1]+fontsz*(i-1.5));
+    gInfo.fill(...colorFront);
+    gInfo.text(a,cvs.center()[0],cvs.center()[1]-0.44*0.5*cvs.size()[1]+fontsz*(1));
     i++;
 
     a = "colorMid: "+colorMid;
     gInfo.fill(colorMid[0],colorMid[1],(100-colorMid[2]),100);
-    gInfo.text(a,cvs.center()[0],cvs.center()[1]+fontsz*(i-1.5));
+    gInfo.fill(...colorMid);
+    gInfo.text(a,cvs.center()[0],cvs.center()[1]+0.44*0.5*cvs.size()[1]+fontsz*(1));
     i++;
 
     a = "colorBg: "+colorBg;
     gInfo.fill(colorBg[0],colorBg[1],(100-colorBg[2]),100);
-    gInfo.text(a,cvs.center()[0],cvs.center()[1]+fontsz*(i-1.5));
+    gInfo.fill(...colorBg);
+    gInfo.text(a,cvs.center()[0],cvs.center()[1]-0.33*0.5*cvs.size()[1]+fontsz*(1));
     i++;
 
     // infoTxt.push("Please move your mouse, and stop and wait a while.");

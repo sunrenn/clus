@@ -4,24 +4,22 @@ let objCvs;  // for Image File Saving.
 
 // NaN set
 let startDraw = 0;
-let displayColorSquare = 0;
+let displayColorSquare = 1;
 let displayShowInfo = 1;
 
 
 function setup() {
   objCvs = createCanvas(...cvs.size());
-	background(100);
-	objCvs.mousePressed(function(){
-		clear();
-		background(...colorBg);
-	});
+  background(...colorBg);
+  blendMode(BLEND);
 }
 
 function draw() {
-	circle(...cvs.center(), 20);
 
-  colorSquire();
-  showInfo();
+    
+
+  // colorSquire();
+  // showInfo();
   
 }
 
@@ -60,8 +58,7 @@ function mouseReleased(){
   mdv.push((mdv[2]-mdv[0])/width);  //[6]
   mdv.push((mdv[3]-mdv[1])/height); //[7]
   startDraw=1;
-  colorSquire();
-  showInfo();
+
 }
 
 function mouseDragged(){
@@ -69,7 +66,7 @@ function mouseDragged(){
   // gMid.clear();
   if (mouseButton === LEFT) {
     matchColor();
-    background(colorBg);
+    // background(colorBg);
   }
   else if (mouseButton === CENTER) {
 
@@ -77,4 +74,9 @@ function mouseDragged(){
   else if (mouseButton === RIGHT) {
     text("I dont have middle button",cvs.center()[0],cvs.center()[1]);
   }
+  clear();
+  colorSquire();
+  showInfo();
+  background(...colorBg);
+  
 }
