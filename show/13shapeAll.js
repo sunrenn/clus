@@ -2,7 +2,7 @@
 // Canvas Size
 let cvsSize;
 let cvsCenterXY;
-let cvsScale = 3;
+let cvsScale = 1;
 let cvspadding = 0;
 cvsSize = [window.innerWidth, window.innerHeight];
 cvsSize = [650,650];
