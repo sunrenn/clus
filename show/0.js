@@ -188,6 +188,6 @@ function keyPressed(){
     if (key=="x"){
     }
     if (key=="s"){
-      saveCanvas(objCvs, 'fotoBlock_'+info.imgName.split(".")[0]+'_'+dotsize[0]+'_'+dotsize[1], 'jpg');
+      saveCanvas(objCvs, 'fotoBlock_'+info.imgName.split(".")[0]+'_'+dotsize[0]+'_'+dotsize[1], 'png');
     }
   }
