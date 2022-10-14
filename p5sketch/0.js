@@ -1,507 +1,205 @@
-cvs = new Cvs([650,650],1,0);
+let info = [];
+let imgPath = "assets/photos/";
+// info = {
+//     imgName: "1.jpg",
+//     coloradj: [1,1,1],
+//     paperSize: [350,350,1],
+//     imgTranslate: [222,0]
+// }
+
+info = {
+    imgName: "jz_stage.jpg",
+    coloradj: [0.8,1,1.4],
+    paperSize: [297,210,4],
+    imgTranslate: [0,0]
+}
+// info = {
+//     imgName: "nowork.jpg",
+//     coloradj: [1.4s,1.3,1.5],
+//     paperSize: [297,210,4],
+//     imgTranslate: [0,0]
+// }
+// info = {
+//     imgName: "iceriver_playground.jpg",
+//     coloradj: [1,1,1],
+//     paperSize: [210,297,4],
+//     imgTranslate: [0,0]
+// }
+// info = {
+//     imgName: "snowriver_sunset.jpg",
+//     coloradj: [1,1.1,1.2],
+//     paperSize: [297,210,4],
+//     imgTranslate: [0,0]
+// }
+// info = {
+//     imgName: "over_maybe_shanghai.jpg",
+//     coloradj: [1,1,1],
+//     paperSize: [210,297,4],
+//     imgTranslate: [0,0]
+// }
+info = {
+    imgName: "winter_fire.jpg",
+    coloradj: [1,1,1],
+    paperSize: [297,210,4],
+    imgTranslate: [0,0]
+}
+info = {
+    imgName: "street.jpg",
+    coloradj: [1,1,1],
+    paperSize: [297,210,4],
+    imgTranslate: [0,0]
+}
+
+
+const imgUrl = imgPath+info.imgName;
+
+
+
+let cvsSize = [info.paperSize[0], info.paperSize[1]];
+cvs = new Cvs(cvsSize,info.paperSize[2],0);
 
 cvsSize = cvs.size();
-cvsCenterXY = cvs.center();
+let cvsCenter = cvs.center();
+let oImg;
+let ratioImgOrg = 1;
+const clrAdj = info.coloradj;
 
+let pixSize = 4;
+let minPixSz = 4;
+let dotsize = [0,0];
 
-style = {
-  rangeHueDynamic: 0.1,  // 0-1
-  saturationStroke: 50,
-  saturationBg: 50,
-  lightFront:80,
-  contrast:20,  //% 对比度
-  alphaFront: 100,
-  alphaMid: 0,
-  alphaBg: 100,
-}
+const testSwitch = 2;
+let gTst;
+const testSegNum = 10;
 
-// NaN Abstract No.1 set
-let xyBox = [];
-
-
-const xyBoxlen = 15;	// records amount
-const xyBoxGetAt = 3;
-const xyBoxGAAdj = [0,0];
-
-const filterRange = 11;
-
-const shapeMount = 1;
-
-const ifDisplayColorSquare = 0;
-
-const lineStyle = 2;
-const shapeModeId = 0;
-const boundDrawAmount = 800;
-const brushWidth = cvsSize[0]*0.01;
-
-const wholeshitscale = 
-// [2.73,2.73];
-[0.8,0.8];
-const shitcenter = 
-[1,1];
-// [2,3];
-// [2.5,2.5];
-
-
-
-// Color and Style
-let audioVisualRate = 24;
-let driverType = 0; // -1 mp3 | -2 mic  | >=0 not by mouse
-let noiseLevel = -3;
-let motorbySong=0;
-
-function rangeInt(arr,range=[0,101],anew=1){
-  if (anew==1) {
-    for (let i=0;i<arr.length;i++){
-      if (arr[i]>0) {
-        arr[i] = mathRound(range[0]+(arr[i]%range[1]),0);
-      }
-      else {
-        arr[i] = range[1]+arr[i]
-      }
-    }
-  }
-  else if (anew==0){
-    for (let i=0;i<arr.length;i++){
-      arr[i] = mathRound(arr[i]%range[1],0);
-    }
-  }
-  return arr;
-}
-
-function mathRound(val,decimalPlaces=2){
-  return(Number((((Math.round(val*(10**decimalPlaces)))/(10**(decimalPlaces))).toFixed(decimalPlaces))));
-}
-
-
-
-let objCvs;  // for Image File Saving.
-let gInfo; // graphic for info
-let gColorSquare; // graphic for ColorSquare
-let gFront; // graphic for Abstract
-let gMid; // graphic for Abstract
-
-let soundVisual = {
-  mmiicc:null,
-  micLevel:null,
-  svSetup: function(cvs){
-    cvs.mousePressed(userStartAudio);
-    this.mmiicc = new p5.AudioIn();
-    this.mmiicc.start();
-  },
-  svDraw: function(){
-    this.micLevel = this.mmiicc.getLevel();
-    let y = height - this.micLevel * height;
-    ellipse(width/2, y, 10, 10);
-  },
-  svGetVal: function(){
-    this.micLevel =   this.mmiicc.getLevel();
-    let svval =       this.micLevel*2000  *mouseY/height;
-    svval =           this.micLevel*2000  *0.1*audioVisualRate;
-    
-    return svval;
-  }
-};
-
-let localSong;
 function preload() {
-  if (driverType==-1){
-    soundFormats('mp3', 'ogg');
-    localSong = loadSound('assets/symphony__1_for_dot_matrix_.mp3');
-  }
+    oImg = loadImage(imgUrl);
 }
-
-let txtarr=[];
-let showInfoTimer = 0;
-let displayTime = 1;
-
-let startDraw = 0;
-let counterStp = 0;
 
 function setup() {
-  objCvs = createCanvas(...cvsSize);
-  colorMode(HSL,100);
-  randomColor();
-  blendMode(BLEND);
-  background(...colorBg);
-  gInfo = createGraphics(...cvsSize);
-  gColorSquare = createGraphics(...cvsSize);
-  gFront = createGraphics(...cvsSize);
-  gMid = createGraphics(...cvsSize);
-  gFront.colorMode(HSL,100);
-  gMid.colorMode(HSL,100);
-  if (driverType==-2){
-    soundVisual.svSetup(objCvs);
-  }
-  else if (driverType==-1){
-    objCvs.mousePressed(function(){
-      localSong.play();
-      startDraw=1;
-      clear();
-      background(...colorBg);
-    });
-    amplitude = new p5.Amplitude();
-  }
+    objCvs = createCanvas(...cvsSize);
+    gTst = createGraphics(...cvsSize);
+    background(0);
 
-  textAlign(CENTER);
+    frameRate(1);
+    pixelDensity(1); // ***
 
-  txtarr.push("你好");
-  txtarr.push("");
-  txtarr.push(String(""));
+    ratioImgOrg *= 1;
+
+    // ( video, x, y, (w), (h), startX, startY, copyW, copyH )
+    // image after resize canvas, copy orginal size, then resize to new image size.
+    // image is copy at every frame, why resize not for each time ?
+    if (testSwitch==1) {
+        testSeg();
+        image(gTst,0,0,...cvsSize);
+    }
+    else {
+        imgPic();
+    }
+    mosaic();
+}
+
+function testSeg() {
+
+    gTst.background(22,0,25);
+    let rectSz = [cvsSize[0]/testSegNum, cvsSize[1]/testSegNum];
+
+    for (let ww=0;ww<testSegNum;ww++) {
+        for (let hh=0;hh<testSegNum;hh++) {
+            gTst.noStroke();
+            gTst.fill((testSegNum-hh)*200/testSegNum,(testSegNum*2-hh-ww)*200*0.5/testSegNum,ww*166/testSegNum);
+            gTst.rect(ww*rectSz[0],hh*rectSz[1],...rectSz);
+        }
+    }
 
 }
 
-function draw() {
-  // clear();
-  // background(...colorBg);
-  if (driverType==-2){
-    soundRound(soundVisual.svGetVal());
-  }
-  else if (driverType==-1){
-    motorbySong = amplitude.getLevel()*audioVisualRate - noiseLevel;
-    motorbySong = (motorbySong>0)?motorbySong:0;
-    soundRound(motorbySong);
-  }
-  // say();
-
-  clear();
-  background(colorBg);
-  // nan abstract No.1
-  if (startDraw>0) {
-    shapeSth(counterStp,motorbySong);
-    counterStp++
-    // push();
-    // gFront.rotate(PI / 4);
-    image(gMid,0,0);
-    image(gFront,0,0);
-    // pop();
-  }
-  else if (frameCount==1) {
-  }
-
-  if (ifDisplayColorSquare==1){
-    colorSquire();
-    showInfo();
-  }
-
-}
+function draw() {}
 
 
-let mouseDraggedValue = [];
-let mdv = mouseDraggedValue;
+// let mv = [];
 
-function mousePressed(){
-  mdv = [mouseX,mouseY];
-}
+// function mousePressed(){
+//     mv = [mouseX,mouseY];
+// }
+
+// function mouseDragged() {
+//     pixSize = Math.floor(minPixSz+(mouseX-mv[0])**2/200);
+// }
+
 function mouseReleased(){
-  mdv.push(mouseX);
-  mdv.push(mouseY);
-  mdv.push((mdv[2]-mdv[0])/1);  //[4]
-  mdv.push((mdv[3]-mdv[1])/1);  //[5]
-  mdv.push((mdv[2]-mdv[0])/width);  //[6]
-  mdv.push((mdv[3]-mdv[1])/height); //[7]
-  startDraw=1;
-  if (ifDisplayColorSquare==1){
-    colorSquire();
-    showInfo();
-  }
+    pixSize = Math.floor(minPixSz+(mouseX)*0.25);
+    if (testSwitch==1) {
+        testSeg();
+    }
+    else {
+        imgPic();
+    }
+    mosaic(undefined,undefined,pixSize);
 }
-// mdv[0] - mdv[3] 鼠标拖拽的起点xy和终点xy
-// mdv[4],mdv[5] 拖拽距离像素绝对值(0~width/height)
-// mdv[6],mdv[7] 拖拽距离画幅相对值(0~1)
 
-
-function mouseDragged(){
-  // gFront.clear();
-  // gMid.clear();
-
-  if (mouseButton === LEFT) {
-    matchColor();
-    background(colorBg);
-  }
-  else if (mouseButton === CENTER) {
-
-  }
-  else if (mouseButton === RIGHT) {
-    text("I dont have middle button",cvsCenterXY[0],cvsCenterXY[1]);
-  }
+function imgPic(){
+    let imgScl = Math.min(oImg.width/cvsSize[0], oImg.height/cvsSize[1]);
+    let imgTranslate = info.imgTranslate;
+    image(
+        oImg, 
+        0, 0, cvsSize[0], cvsSize[1], 
+        imgTranslate[0], imgTranslate[1], // 起点
+        (cvsSize[0]*imgScl), (cvsSize[1]*imgScl)  // 宽高，不是终点
+    );
+    
 }
+
+function mosaic(aa=[0,0],bb=cvsSize,sz=3) {
+    let r, g, b, alp;
+    // let gry;
+
+    let i = 0;
+    let thisPixColor = [];
+    dotsize = [sz,sz];
+    let numRowCol = [
+        Math.floor(cvsSize[0]/sz),
+        Math.floor(cvsSize[1]/sz),
+    ];
+    dotsize = [
+        Math.ceil(cvsSize[0]/numRowCol[0]),
+        Math.ceil(cvsSize[1]/numRowCol[1]),
+    ]
+
+    loadPixels();
+    for (let fy = aa[1]; fy < bb[1]; fy += dotsize[1]) {
+        for (let fx = aa[0]; fx < bb[0]; fx += dotsize[0]) {
+            let i = (fx + fy * width) * 4;
+            r = pixels[i];
+            g = pixels[i + 1];
+            b = pixels[i + 2];
+            alp = pixels[i + 3];
+            thisPixColor = [r*clrAdj[0], g*clrAdj[1], b*clrAdj[2], alp];
+            // gry = (r + g + b) / 3;
+
+            //fill(r, g, b, alp);
+            fill(thisPixColor);
+            noStroke();
+            rect(fx, fy, dotsize[0], dotsize[1]);
+
+            // i++; // this wouldn't work.
+            // i = i+4; //this wouldn't work as well. Think of why :D
+            // i = i + 4 * dotsize; //this don't work too. Oh my god!!! :<
+        }
+    }
+}
+
 
 function keyPressed(){
-  if (key==" "){
-    randomColor();
-    clear();
-    background(colorBg);
-    // counterStp = Math.floor(Math.random()*boundDrawAmount)%500;
-    counterStp = 0;
-  }
-  if (key=="a"){
-    for (let i=0;i<boundDrawAmount;i++) {
-      shapeSth(counterStp,motorbySong);
-      counterStp++;
+    if (key==" "){
+    }
+    if (key=="c"){
+    }
+    if (key=="v"){
+    }
+    if (key=="x"){
+    }
+    if (key=="s"){
+      saveCanvas(objCvs, 'fotoBlock_'+info.imgName.split(".")[0]+'_'+dotsize[0]+'_'+dotsize[1], 'png');
     }
   }
-  if (key=="r"){
-    randomColor();
-    gInfo.clear();
-    gColorSquare.clear();
-    gFront.clear();
-    gMid.clear();
-    clear();
-    
-    background(colorBg);
-  }
-  if (key=="c"){
-    noLoop();
-  }
-  if (key=="v"){
-    // redraw();
-    loop();
-  }
-  if (key=="R"){
-    // redraw();
-    gInfo.clear();
-    gColorSquare.clear();
-    gFront.clear();
-    gMid.clear();
-    clear();
-    loop();
-  }
-  if (key=="x"){
-    gFront.clear();
-    gMid.clear();
-  }
-  if (key=="s"){
-    saveCanvas(objCvs, 'abstractNo1_', 'png');
-  }
-  if (key=="f"){
-    gInfo.clear();
-    gColorSquare.clear();
-    gFront.clear();
-    gMid.clear();
-    clear();
-    saveFrames('abstractFrame_', 'png', 15, 3);
-  }
-}
-
-
-function drawaline(x,y,nn,val=0){
-  length = val*20;
-  stroke(colorFront[0]+nn*val,colorFront[1],colorFront[2],colorFront[3]);
-  strokeWeight(2);
-  line(x-length,y-length,x+length,y+length);
-}
-
-function soundRound(val){
-  let stepNum = [5,8];
-  let nn=0;
-  for (let ii=0;ii<stepNum[0]; ii++){
-    for (let jj=0;jj<stepNum[1]; jj++){
-      nn++;
-      drawaline((0.5+ii)*width/stepNum[0],(0.5+jj)*height/stepNum[1],nn,val*0.25);
-      stroke(colorMid[0]+nn*val,colorMid[1],colorMid[2],20+nn/2);
-      strokeWeight(300+val*50-15*nn);
-      point(...cvsCenterXY);
-    }
-  }
-}
-
-
-function say(){
-
-  txtlen = txtarr.length;
-  for (let ii=0;ii<txtlen;ii++) {
-      noStroke();
-      fill(...colorFront);
-      text(txtarr[ii],(ii+0.5)*width/txtlen,frameCount%height);
-  }
-}
-
-function shapeSth(fc,motor=1){
-  let theta;
-  let xxx, yyy;
-  if ((driverType==-1)||(driverType==-2)){
-    theta = radians(motor*180/cvsSize[0]);
-    xxx = yyy = motor*cvsSize[1]/[cvsCenterXY[0]+cvsCenterXY[1]];
-  }
-  // -1 mp3 | -2 mic  | >=0 not by mouse
-  else if (driverType>=0) {
-    [theta,xxx,yyy] = shapeMode[shapeModeId]();
-  }
-  else {
-    theta = radians(mouseX*180/cvsSize[0]);
-    xxx = yyy = mouseY/[cvsCenterXY[0]+cvsCenterXY[1]];
-  }
-  // xxx = mouseY/cvsCenterXY[0];
-  // yyy = mouseY/cvsCenterXY[1];
-  let mul= 0.001;
-  let [tempx, tempy] = [1, 1];  // init
-  let ff = Math.tan(radians(fc));
-
-  let [a, b, c, d] = [cos(fc*mul),sin(fc*mul),cos(fc*mul+theta),sin(fc*mul+theta)];
-
-  let xyr = [];
-
-  for (var i = 0; i < shapeMount ; i++) {
-
-    // [pre_x, pre_y] = [tempx * 100 + cvsCenterXY, tempy * 100 + cvsCenterXY];
-    
-    tempx = (Math.sin(a * yyy) - Math.cos(b * xxx))*2;
-    tempy = (Math.sin(c * xxx) - Math.cos(d * yyy))*2;
-
-    let [px, py] = [
-      cvsCenterXY[0]*shitcenter[0] + (tempx * 0.5*cvsCenterXY[0])*0.5*wholeshitscale[0], 
-      cvsCenterXY[1]*shitcenter[1] + (tempy * 0.5*cvsCenterXY[1])*0.5*wholeshitscale[1]
-    ];
-    // 本来是个十字，把画面分成了四个象限，乘以二后，只显示第一象限。
-    xyr.push([px,py]);
-    let prex = 0;
-    let prey = 0;
-    if ((xyBox.length>=xyBoxGetAt)&&(xyBox[xyBoxGetAt])){
-      let t1,t2;
-      [t1,t2] = [(xyBoxGetAt+xyBoxGAAdj[0]+sin(frameCount)),(xyBoxGetAt+xyBoxGAAdj[1]+sin(frameCount))];
-      [t1,t2] = [(xyBoxGetAt+xyBoxGAAdj[0]).toFixed(0),(xyBoxGetAt+xyBoxGAAdj[1]).toFixed(0)];
-      if ((xyBox[t1])&&(xyBox[t2])){
-        prex = xyBox[t1][i][0];
-        prey = xyBox[t2][i][1];
-      }
-      else {
-        // console.log(xyBox.length,[t1,t2],frameCount);
-      }
-      px = px + 0.1*(px-prex);
-      py = py + 0.1*(py-prey);
-    }
-    
-    funStyleBox[lineStyle](motor,i,px,py,prex,prey);
-    [xxx, yyy] = [tempx, tempy]; // [10,10]
-  }
-  xyRecoder(xyr);
-  
-
-
-}
-
-function xyRecoder(sth,len=xyBoxlen,atEnd = 0){
-  if (atEnd==0){
-    xyBox.unshift(sth);
-    if (xyBox.length>len){
-      xyBox.pop();
-    }
-  }
-  else {
-    xyBox.push(sth);
-    if (xyBox.length>len){
-      xyBox.shift();
-    }
-  }
-  return xyBox;
-}
-
-let funStyleBox = [];
-let shapeMode = []
-
-funStyleBox[0] = function(motor,i,px,py,prex,prey){
-  
-  let range = 20;
-  let hueRange = style.rangeHueDynamic;
-  let stepLen = dist(px,py,prex,prey);
-  if ((stepLen<range)&&(stepLen>0.4)){
-    if(style.alphaFront>0){
-      gFront.blendMode(LIGHTEST);
-      gFront.stroke(px-prex+py-prey+i*0.2+colorFront[0]*hueRange,colorFront[1],colorFront[2],colorFront[3]);
-      // gFront.strokeWeight(1+sin(radians(frameCount))*10*cvsScale/(1 + i*0.5));
-      gFront.strokeWeight(brushWidth/(1+stepLen*2));
-      gFront.point(px,py);
-    }
-  }
-  else {
-    if((style.alphaMid>0)&&(colorMid[0]!=0)){
-      // gMid.stroke((px-prex+py-prey+i*0.2+colorMid[0]*hueRange),colorMid[1],colorMid[2],colorMid[3]);
-      gMid.fill((colorMid[0]),colorMid[1],colorMid[2]**2,colorMid[3]);
-      gMid.noStroke();
-      // gMid.fill(((px-prex+py-prey)*i*1+colorBg[0]),colorBg[1],colorBg[2],colorBg[3]);
-      gMid.circle(px,py,(px-prex+py-prey)*0.1);
-    }
-  }
-}
-
-funStyleBox[1] = function(motor,i,px,py,prex,prey){
-  let stepLen = dist(px,py,prex,prey);
-  let range = filterRange;
-  let hueRange = style.rangeHueDynamic;
-  if (stepLen<range){
-    if(style.alphaFront>0){
-      gFront.blendMode(LIGHTEST);
-      gFront.stroke(
-        (colorFront[0]-sin(frameCount)*100*hueRange)%100,
-        colorFront[1],
-        colorFront[2],
-        colorFront[3]
-      );
-      gFront.noFill();
-      gFront.strokeWeight(30);
-      gFront.strokeCap(ROUND);
-      // gFront.circle(px,py,1+sin(radians(frameCount))*1*cvsScale*(1 + i*0.5));
-      gFront.line(prex,prey,px,py);
-    }
-  }
-  else {
-    if((style.alphaMid>0)&&(colorMid[0]!=0)){
-      // gMid.stroke((px-prex+py-prey+i*0.2+colorMid[0]*hueRange),colorMid[1],colorMid[2],colorMid[3]);
-      gMid.fill(colorMid[0],colorMid[1],colorMid[2]**2,colorMid[3]);
-      gMid.NoStroke();
-      // gMid.circle(px,py,1+sin(radians(frameCount))*1*cvsScale*(1 + i*0.5));
-      gMid.circle(px,py,11);
-    }
-  }
-}
-
-funStyleBox[2] = function(motor,i,px,py,prex,prey){
-  let stepLen = dist(px,py,prex,prey);
-  let hueRange = style.rangeHueDynamic;
-  if (stepLen<filterRange){
-    if(style.alphaFront>0){
-      gFront.blendMode(LIGHTEST);
-      gFront.stroke(
-        (colorFront[0]-sin(frameCount)*100*hueRange)%100,
-        colorFront[1],
-        colorFront[2],
-        colorFront[3]
-      );
-      gFront.noFill();
-      gFront.strokeWeight(1);
-      gFront.strokeCap(ROUND);
-      gFront.circle(px,py,1+sin(radians(frameCount))*(1 + i*0.5));
-      // gFront.line(px,py,prex,prey);
-    }
-  }
-  else {
-    if((style.alphaMid>0)&&(colorMid[0]!=0)){
-      gMid.stroke((px-prex+py-prey+i*0.2+colorMid[0]*hueRange),colorMid[1],colorMid[2],colorMid[3]);
-      gMid.fill(colorMid[0],colorMid[1],colorMid[2]**2,colorMid[3]);
-      // gMid.NoStroke();
-      // gMid.circle(px,py,1+sin(radians(frameCount))*1*cvsScale*(1 + i*0.5));
-      gMid.circle(px,py,11);
-    }
-  }
-}
-
-shapeMode[1] = function(){
-  let theta,xxx,yyy;
-  theta = radians(frameCount*1);
-  xxx = yyy = sin(radians(frameCount));
-  return [theta,xxx,yyy]
-}
-
-shapeMode[0] = function(){
-  let theta,xxx,yyy;
-  theta = radians(frameCount*mdv[6]*mdv[7])*18;
-  xxx = cos(radians(frameCount*0.01*mdv[6])*mdv[6]);
-  yyy = cos(radians(frameCount*0.01*mdv[7])*mdv[7]);
-  return [theta,xxx,yyy]
-}
-
-
-// mdv[0] - mdv[3] 鼠标拖拽的起点xy和终点xy
-// mdv[4],mdv[5] 拖拽距离像素绝对值(0~width/height)
-// mdv[6],mdv[7] 拖拽距离画幅相对值(0~1)

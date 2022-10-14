@@ -15,7 +15,7 @@ let sData = window.siteGlobal.siteData;
   a_p5ref.style.bottom = "10px";
   a_p5ref.style.fontSize = "11px";
   let param = comm.parameters();
-  comm.ajaxP5JsFile("scrPi", "../show/_p5i.js");
+  comm.ajaxP5JsFile("scrPi", "../p5sketch/_p5i.js");
   if ((param.params) && (param.params.length > 0) && (param.params[1] != "")) {
     if (param.params[2] == "ml5js") {
       comm.ajaxP5JsFile("ml5lib", "../assets/ml5/ml5.min.js");
@@ -23,7 +23,7 @@ let sData = window.siteGlobal.siteData;
       comm.ajaxP5JsFile("scrA", "../"+param.params[0]+"/"+param.params[1]+".js");
   }
   else {
-      comm.ajaxP5JsFile("scrA", "../show/0.js");
+      comm.ajaxP5JsFile("scrA", "../p5sketch/0.js");
   }
 
   let itmlist = sData.items.dataContent;

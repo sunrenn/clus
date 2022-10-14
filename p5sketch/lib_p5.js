@@ -45,7 +45,7 @@ function mousePositionValue(r=[0,100]){
 
 
 function colorSquire(gColorSquare=createGraphics(...cvs.size())){
-  if (displayColorSquare==1){
+  if (ifDisplayColorSquare==1){
 
     gColorSquare.clear();
 
@@ -71,7 +71,7 @@ function colorSquire(gColorSquare=createGraphics(...cvs.size())){
 
 
 function showInfo(gInfo=createGraphics(...cvs.size())){
-  if (displayShowInfo==1){
+  if (ifDisplayColorSquare==1){
 
     let i=0;
     let a = "";

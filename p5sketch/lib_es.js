@@ -27,3 +27,27 @@ function cloneChild(n = 2, parentObj, targetObj, idtemplate) {
         }
     }
 }
+
+function rangeInt(arr,range=[0,101],anew=1){
+  if (anew==1) {
+    for (let i=0;i<arr.length;i++){
+      if (arr[i]>0) {
+        arr[i] = mathRound(range[0]+(arr[i]%range[1]),0);
+      }
+      else {
+        arr[i] = range[1]+arr[i]
+      }
+    }
+  }
+  else if (anew==0){
+    for (let i=0;i<arr.length;i++){
+      arr[i] = mathRound(arr[i]%range[1],0);
+    }
+  }
+  return arr;
+}
+
+function mathRound(val,decimalPlaces=2){
+  return(Number((((Math.round(val*(10**decimalPlaces)))/(10**(decimalPlaces))).toFixed(decimalPlaces))));
+}
+

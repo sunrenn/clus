@@ -21,43 +21,43 @@ window.siteGlobal.siteData = {
                 id: "call",
                 type: "p5js",
                 itemName: "new & null",
-                itemSrc: "show/1newnull.js",
+                itemSrc: "p5sketch/1newnull.js",
             },
             {
                 id: "money",
                 type: "p5js",
                 itemName: "no Money",
-                itemSrc: "show/2ugly2hide.js",
+                itemSrc: "p5sketch/2ugly2hide.js",
             },
             {
                 id: "notes",
                 type: "p5js",
                 itemName: "Notes",
-                itemSrc: "show/3notes.js",
+                itemSrc: "p5sketch/3notes.js",
             },
             {
                 id: "whiFlo",
                 type: "p5js",
                 itemName: "whistle in flowers",
-                itemSrc: "show/4tinynovel.js",
+                itemSrc: "p5sketch/4tinynovel.js",
             },
             {
                 id: "bb",
                 type: "p5js",
                 itemName: "What's wrong balls",
-                itemSrc: "show/5math.js",
+                itemSrc: "p5sketch/5math.js",
             },
             {
                 id: "omygod",
                 type: "p5js",
                 itemName: "2Stupid2work",
-                itemSrc: "show/6pixels.js",
+                itemSrc: "p5sketch/6pixels.js",
             },
             {
                 id: "badball",
                 type: "p5js",
                 itemName: "try to be a bad ball",
-                itemSrc: "show/7badball2.js",
+                itemSrc: "p5sketch/7badball2.js",
             }
         ]
     }

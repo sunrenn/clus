@@ -44,7 +44,7 @@ const imgUrl = imgPath+info.imgName;
 
 
 let cvsSize = [info.paperSize[0], info.paperSize[1]];
-let cvs = new Cvs(cvsSize,info.paperSize[2],0);
+cvs = new Cvs(cvsSize,info.paperSize[2],0);
 
 cvsSize = cvs.size();
 let cvsCenter = cvs.center();
