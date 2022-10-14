@@ -2,28 +2,33 @@
 // Canvas Size
 class Cvs {
     constructor(sz = [window.innerWidth, window.innerHeight], scl=1, pd=0){
-		this.cvsSize = sz;
+		this.baseSz = sz;
 		this.cvsScale = scl;
 		this.cvspadding = pd;
 		this.cvsCenterXY = [];
+    this.cvsSz = [0,0]
 	}
 	size(){
 		
-        // this.cvsSize = sz;
-		// this.cvsSize = [650,650];
-		// this.cvsSize = [2160,5120];
-		// this.cvsSize = [5120,3800];
-		// this.cvsSize = [2160,3800];
-		// this.cvsSize = [1024,1024];
-		this.cvsSize = [this.cvsSize[0]*this.cvsScale-this.cvspadding,this.cvsSize[1]*this.cvsScale-this.cvspadding];
-		return this.cvsSize;
+        // this.baseSz = sz;
+		// this.baseSz = [650,650];
+		// this.baseSz = [2160,5120];
+		// this.baseSz = [5120,3800];
+		// this.baseSz = [2160,3800];
+		// this.baseSz = [1024,1024];
+		this.cvsSz = [
+      Math.round(this.baseSz[0]*this.cvsScale-this.cvspadding),
+      Math.round(this.baseSz[1]*this.cvsScale-this.cvspadding)
+    ];
+		return this.cvsSz;
 	}
 	center(){
-		this.cvsCenterXY = [this.cvsSize[0]*0.5,this.cvsSize[1]*0.5];
+		this.cvsCenterXY = [this.cvsSz[0]*0.5,this.cvsSz[1]*0.5];
 		return this.cvsCenterXY;
 	}
 }
 
+let cvs = new Cvs([650,650],1,0);
 
 
 

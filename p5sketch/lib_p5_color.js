@@ -6,7 +6,7 @@ let style = {
   lightFront:80,
   contrast:20,  //% 对比度
   alphaFront: 100,
-  alphaMid: 100,
+  alphaMid: 0,
   alphaBg: 100,
 }
 
@@ -14,6 +14,46 @@ let fHue,fSaturation,fLight,fAlpha;
 let bHue,bSaturation,bLight,bAlpha;
 let mHue,mSaturation,mLight,mAlpha;
 let colorFront,colorBg,colorMid;
+
+
+function matchColor(range=[35,65]){
+  let vrel = mousePositionValue(range);
+  let vabs = mousePositionValue();
+  let tmpArr = [];
+
+
+  tmpArr = rangeValue([
+    vabs[0],
+    style.saturationStroke*(1-vabs[3]),
+    vabs[1],
+    style.alphaFront
+  ]);
+  [fHue,fSaturation,fLight,fAlpha]=tmpArr;
+
+  tmpArr = rangeValue([
+    (vabs[0]%(100-range[0])+range[0]),
+    style.saturationBg*(1-vabs[3]),
+    100-vabs[1],
+    style.alphaBg
+  ]);
+  [bHue,bSaturation,bLight,bAlpha]=tmpArr;
+
+  tmpArr = rangeValue([
+    (vabs[1]),
+    width*(vrel[0]),
+    50,
+    style.alphaMid
+  ]);
+  [mHue,mSaturation,mLight,mAlpha]=tmpArr;
+  
+  setColorSystem();
+}
+
+
+
+
+
+
 
 function setColorSystem(){
   colorFront = [fHue,fSaturation,fLight,fAlpha];
@@ -53,51 +93,9 @@ function randomColor(){
 
 
 
-function matchColor(range=[35,65]){
-  let vrel = mousePositionValue(range);
-  let vabs = mousePositionValue();
-  let tmpArr = [];
 
 
-  tmpArr = rangeValue([
-    vabs[0],
-    style.saturationStroke*(1-vabs[3]),
-    vabs[1],
-    style.alphaFront
-  ]);
-  [fHue,fSaturation,fLight,fAlpha]=tmpArr;
-
-  tmpArr = rangeValue([
-    (vabs[0]%(100-range[0])+range[0]),
-    style.saturationBg*(1-vabs[3]),
-    100-vabs[1],
-    style.alphaBg
-  ]);
-  [bHue,bSaturation,bLight,bAlpha]=tmpArr;
-
-  tmpArr = rangeValue([
-    (vabs[1]),
-    width*(vrel[0]),
-    50,
-    style.alphaMid
-  ]);
-  [mHue,mSaturation,mLight,mAlpha]=tmpArr;
-
-  console.log(tmpArr);
+// // Color System
+// class Clr {
   
-  setColorSystem();
-}
-
-
-
-
-
-
-
-
-
-
-// Color System
-class Clr {
-  
-}
+// }
